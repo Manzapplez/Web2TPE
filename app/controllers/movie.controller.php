@@ -9,7 +9,17 @@ class MovieController{
 
 
     function __construct(){
-        this->movieModel = new movieModel();
-        this->movieView = new movieView();
+        this->movieModel = new MovieModel();
+        this->movieView = new MovieView();
+    }
+
+    function showMovies(){
+            $movies = $this->movieModel->getMovies();
+            $this->movieView->showMovies($movies);
+    }
+
+    function showReview(){
+        $movie = $this->movieModel->getMovie();
+        $this->movieView->showMovie($movie);
     }
 }
