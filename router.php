@@ -14,10 +14,20 @@ ACCION                         URL                      DESTINO
 Mostrar todas las reseñas      /reviews                 review.controller->showReviews()
 Mostrar reseña                 /reviews/ID              review.controller->showReview($id)
 Mostrar reseñas por genero     /reviews/?               review.controller->showReviews($genre)
+Cargar reseña
+Modificar reseña
+Eliminar reseña
 
 Mostrar todas las pelis        /movies                  movie.controller->showMovies()
 Mostrar peli                   /movies/ID               movie.controller->showMovie($id)
-Mostrar pelis por genero       /movies/?                movie.controller->showMovies($genre)
+Mostrar pelis por genero       /moviesByGenre/genre?    movie.controller->showMoviesByGenre($genre)
+Cargar peli                    /movie_add
+Modificar peli
+Eliminar peli
+
+Loguear                        /login                   auth.controller->login()
+Autenticacion                  /auth                    auth.controller->auth()
+Desloguear                     /logout                  auth.controller->logout()
 */
 
 
@@ -40,4 +50,16 @@ switch($params[0]){
         }
         $controller->showMovies();
         break;
+    case 'login'
+        $controller = new AuthController();
+        $controller->login();
+        break;
+    case 'auth'
+        $controller = new AuthController();
+        $controller->auth();
+    break;
+    case 'logout'
+        $controller = new AuthController();
+        $controller->logout();
+    break;
 }

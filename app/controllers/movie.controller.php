@@ -18,8 +18,8 @@ class MovieController{
             $this->movieView->showMovies($movies);
     }
 
-    function showReview(){
-        $movie = $this->movieModel->getMovie();
+    function showMovie($id){
+        $movie = $this->movieModel->getMovie($id);
         $this->movieView->showMovie($movie);
     }
 }
