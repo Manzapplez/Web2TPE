@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2024 at 11:47 PM
+-- Generation Time: Oct 18, 2024 at 08:18 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -52,17 +52,17 @@ INSERT INTO `movies` (`id_movie`, `title`, `director`, `synopsis`, `release_date
 
 CREATE TABLE `reviews` (
   `id_review` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
   `id_movie` int(11) NOT NULL,
-  `body` varchar(500) NOT NULL
+  `body` varchar(500) NOT NULL,
+  `rating` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reviews`
 --
 
-INSERT INTO `reviews` (`id_review`, `id_user`, `id_movie`, `body`) VALUES
-(1, 2, 1, 'Elijah Wood should wear wigs');
+INSERT INTO `reviews` (`id_review`, `id_movie`, `body`, `rating`) VALUES
+(1, 1, 'Elijah Wood should wear wigs', 4);
 
 -- --------------------------------------------------------
 
@@ -73,16 +73,15 @@ INSERT INTO `reviews` (`id_review`, `id_user`, `id_movie`, `body`) VALUES
 CREATE TABLE `users` (
   `id_user` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `email` varchar(320) NOT NULL
+  `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id_user`, `username`, `email`) VALUES
-(1, 'glupshitto', 'sglup@mock.com'),
-(2, 'DiscoGirl', 'babbalover@mock.com');
+INSERT INTO `users` (`id_user`, `username`, `password`) VALUES
+(1, 'webadmin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -99,15 +98,13 @@ ALTER TABLE `movies`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id_review`),
-  ADD KEY `fk_Reviews_Users` (`id_user`),
   ADD KEY `fk_Reviews_Movies` (`id_movie`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -123,7 +120,7 @@ ALTER TABLE `movies`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -133,8 +130,7 @@ ALTER TABLE `users`
 -- Constraints for table `reviews`
 --
 ALTER TABLE `reviews`
-  ADD CONSTRAINT `fk_Reviews_Movies` FOREIGN KEY (`id_movie`) REFERENCES `movies` (`id_movie`),
-  ADD CONSTRAINT `fk_Reviews_Users` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+  ADD CONSTRAINT `fk_Reviews_Movies` FOREIGN KEY (`id_movie`) REFERENCES `movies` (`id_movie`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
