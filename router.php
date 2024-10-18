@@ -13,14 +13,14 @@ if (!empty( $_GET['action'])) {
 ACCION                         URL                      DESTINO
 Mostrar todas las reseñas      /reviews                 review.controller->showReviews()
 Mostrar reseña                 /reviews/ID              review.controller->showReview($id)
-Mostrar reseñas por genero     /reviews/?               review.controller->showReviews($genre)
+
 Cargar reseña
 Modificar reseña
 Eliminar reseña
 
 Mostrar todas las pelis        /movies                  movie.controller->showMovies()
 Mostrar peli                   /movies/ID               movie.controller->showMovie($id)
-Mostrar pelis por genero       /moviesByGenre/genre?    movie.controller->showMoviesByGenre($genre)
+
 Cargar peli                    /movie_add
 Modificar peli
 Eliminar peli

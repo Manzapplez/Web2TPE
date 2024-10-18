@@ -14,7 +14,7 @@ class DbHelper {
         $tables = $query->fetchAll();
         
         if ( count($tables) == 0 ) {
-            $hash = ''; ////////////////////////////////////////////////////////////////////////
+            $hash = '';
             $sql = <<<END
             -- phpMyAdmin SQL Dump
             -- version 5.2.1
