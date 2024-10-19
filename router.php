@@ -1,7 +1,8 @@
 <?php
-require_once 'app/controllers/task.controller.php';
-
-define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
+require_once './app/config/config.php';
+require_once './app/controllers/movie.controller.php';
+require_once './app/controllers/review.controller.php';
+require_once './app/controllers/auth.controller.php';
 
 $action = 'reviews'; 
 if (!empty( $_GET['action'])) {
@@ -12,18 +13,16 @@ if (!empty( $_GET['action'])) {
 /*TABLA DE RUTEO
 ACCION                         URL                      DESTINO
 Mostrar todas las reseñas      /reviews                 review.controller->showReviews()
-Mostrar reseña                 /reviews/ID              review.controller->showReview($id)
-
-Cargar reseña
-Modificar reseña
-Eliminar reseña
+Mostrar reseña                 /reviews/id              review.controller->showReview($id)
+Cargar reseña                  /addReview               review.controller->add()
+Modificar reseña               /editReview/id           review.controller->edit($id)
+Eliminar reseña                /removeReview/id         review.controller->remove($id)
 
 Mostrar todas las pelis        /movies                  movie.controller->showMovies()
-Mostrar peli                   /movies/ID               movie.controller->showMovie($id)
-
-Cargar peli                    /movie_add
-Modificar peli
-Eliminar peli
+Mostrar peli                   /movies/id               movie.controller->showMovie($id)
+Cargar peli                    /addMovie                movie.controller->add()
+Modificar peli                 /editMovie/id            movie.controller->edit($id)
+Eliminar peli                  /removeMovie/id          movie.controller->remove($id)
 
 Loguear                        /login                   auth.controller->login()
 Autenticacion                  /auth                    auth.controller->auth()
@@ -42,6 +41,19 @@ switch($params[0]){
         }
         $controller->showReviews();
         break;
+    case 'addReview'
+        $controller= new ReviewController();
+        $controller->addReview();
+        break;
+    case 'editReview'
+        $controller= new ReviewController();
+        $controller->editReview($params[1]);
+        break;
+    case 'removeReview'
+        $controller= new ReviewController();
+        $controller->removeReview($params[1]);
+        break;
+
     case 'movies':
         $controller= new MovieController();
         if(isset($params[1])){
@@ -50,6 +62,19 @@ switch($params[0]){
         }
         $controller->showMovies();
         break;
+    case 'addMovie'
+        $controller= new MovieController();
+        $controller->addMovie();
+        break;
+    case 'editMovie'
+        $controller= new MovieController();
+        $controller->editMovie($params[1]);
+        break;
+    case 'removeMovie'
+        $controller= new MovieController();
+        $controller->removeMovie($params[1]);
+        break;
+
     case 'login'
         $controller = new AuthController();
         $controller->login();

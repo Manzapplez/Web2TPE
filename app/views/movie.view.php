@@ -3,10 +3,10 @@ require_once './app/views/view.php'
 
 class MovieView extends View{
 
-    function showMovies($movies){
+    public function showMovies($movies){
         require './app/templates/list.movies.phtml';
     }
-    function showMovie($movie){
+    public function showMovie($movie, $reviews){
         require './app/templates/detail.movie.phtml';
     }
 }

@@ -8,18 +8,42 @@ class reviewController{
     private $reviewView;
 
 
-    function __construct(){
-        this->reviewModel = new ReviewModel();
-        this->reviewView = new ReviewView();
+    public function __construct(){
+        $this->reviewModel = new ReviewModel();
+        $this->reviewView = new ReviewView();
     }
 
-    function showreviews(){
-            $reviews = $this->reviewModel->getreviews();
-            $this->reviewView->showreviews($reviews);
+    public function showReviews(){
+            $reviews = $this->reviewModel->getReviews();
+            $this->reviewView->showReviews($reviews);
     }
 
-    function showreview($id){
-        $review = $this->reviewModel->getreview($id);
-        $this->reviewView->showreview($review);
+    public function showReview($id){
+        $review = $this->reviewModel->getReview($id);
+        $this->reviewView->showReview($review);
+    }
+
+    public function addReview(){
+        AuthHelper::verify();
+
+        $id_movie = $_POST['id_movie'];
+        $body = $_POST['body'];
+        $rating = $_POST['rating'];
+
+        $this->reviewModel->addReview($id_movie,$body,$rating);
+    }
+
+    public function editReview($id){
+        AuthHelper::verify();
+
+        $id_movie = $_POST['id_movie'];
+        $body = $_POST['body'];
+        $rating = $_POST['rating'];
+
+        $this->reviewModel->editReview($id_movie,$body,$rating, $id);
+    }
+    public function removeReview($id){
+        AuthHelper::verify();
+        $this->reviewModel->deleteReview($id)
     }
 }

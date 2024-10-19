@@ -8,14 +8,14 @@ class AuthController{
     private $view;
     private $controller;
 
-    function __construct(){
+    public function __construct(){
         $this->view = new AuthView();
         $this->model = new UserModel();
     }   
-    function login(){
+    public function login(){
         $this->view->showLogin();
     }
-    function auth(){
+    public function auth(){
         $user= $_POST['user'];          //se reciben user y pass enviados por POST del form
         $password = $_POST['password'];
 
@@ -32,7 +32,7 @@ class AuthController{
             $this->view->showLogin('Usuario y/o contraseña inválidos');
         }
     }
-    function logout(){
+    public function logout(){
         AuthHelper::logout();
         header('Location: ' . BASE_URL . 'albums');    
     }
