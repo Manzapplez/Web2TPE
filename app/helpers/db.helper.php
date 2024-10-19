@@ -4,7 +4,7 @@ class DbHelper {
 
     public static function tryCreateDB() {
         $db = DB_NAME;
-        $pdo = new PDO('mysql:host=' . DB_HOST, DB_USER, DB_PASS);
+        $pdo = new PDO(DB_CONNECT_STRING, DB_USER, DB_PASS);
         $query = "CREATE DATABASE IF NOT EXISTS $db";
         $pdo->exec($query);
     }

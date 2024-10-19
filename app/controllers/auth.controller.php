@@ -5,6 +5,7 @@ require_once './app/models/auth.view.php';
 require_once './app/helpers/auth.helper.php';
 
 class AuthController{
+    private $model;
     private $view;
     private $controller;
 
