@@ -1,10 +1,8 @@
 <?php
-review
-class ReviewView{
+require_once './app/views/view.php';
 
-    function __construct(){
+class ReviewView extends View{
 
-    }
     function showReviews($reviews){
         require './app/templates/list.reviews.phtml';
     }

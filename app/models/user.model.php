@@ -1,16 +1,9 @@
 <?php
-require_once './app/helpers/db.helper.php';
+require_once './app/models/model.php'
 
-class UserModel {
-    protected $db;
-    
-    public function __construct() {
-        DbHelper::tryCreateDB();
-        $this->db = new PDO(DB_CONNECT_STRING, DB_USER, DB_PASS);
-        DbHelper::deploy($this->db);
-    }
+class UserModel extends Model{
 
-    public function getByUser($user) {
+    public function getByUser($user) {                    //trae el user de la db
         $query = $this->db->prepare('SELECT * FROM users WHERE user=?');
         $query->execute([$user]);
 

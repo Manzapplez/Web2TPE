@@ -1,9 +1,8 @@
 <?php
-class MovieView{
+require_once './app/views/view.php'
 
-    function __construct(){
+class MovieView extends View{
 
-    }
     function showMovies($movies){
         require './app/templates/list.movies.phtml';
     }

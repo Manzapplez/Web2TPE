@@ -1,7 +1,7 @@
 <?php
- review
-class reviewModel{
-    protected $db;
+require_once './app/models/model.php'
+
+class reviewModel extends Model{
 
     public function getReviews() {
         $query = $this->db->prepare('SELECT * FROM reviews ORDER BY id_movie');

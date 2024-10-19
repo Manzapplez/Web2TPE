@@ -1,12 +1,7 @@
 <?php
-class MovieModel{
-    protected $db;
+require_once './app/models/model.php'
 
-    public function __construct() {
-        DbHelper::tryCreateDB();
-        $this->db = new PDO(DB_CONNECT_STRING, DB_USER, DB_PASS);
-        DbHelper::deploy($this->db);
-    }
+class MovieModel extends Model{
 
     public function getMovies() {
         $query = $this->db->prepare('SELECT * FROM movies ORDER BY title');
