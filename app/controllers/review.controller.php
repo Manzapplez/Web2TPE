@@ -1,7 +1,7 @@
 <?php
 
 require_once './app/models/review.model.php';
-require_once './app/models/review.view.php';
+require_once './app/views/review.view.php';
 
 class reviewController{
     private $reviewModel;
