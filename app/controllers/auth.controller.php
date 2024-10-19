@@ -7,7 +7,6 @@ require_once './app/helpers/auth.helper.php';
 class AuthController{
     private $model;
     private $view;
-    private $controller;
 
     public function __construct(){
         $this->view = new AuthView();
