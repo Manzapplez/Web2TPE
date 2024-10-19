@@ -1,5 +1,5 @@
 <?php
-require_once './app/views/view.php'
+require_once './app/views/view.php';
 
 class MovieView extends View{
 

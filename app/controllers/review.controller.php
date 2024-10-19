@@ -1,7 +1,7 @@
 <?php
 
-require_once './app/models/review.model.php'
-require_once './app/models/review.view.php'
+require_once './app/models/review.model.php';
+require_once './app/models/review.view.php';
 
 class reviewController{
     private $reviewModel;
@@ -44,6 +44,6 @@ class reviewController{
     }
     public function removeReview($id){
         AuthHelper::verify();
-        $this->reviewModel->deleteReview($id)
+        $this->reviewModel->deleteReview($id);
     }
 }

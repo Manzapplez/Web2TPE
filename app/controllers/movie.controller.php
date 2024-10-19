@@ -1,8 +1,8 @@
 <?php
 
-require_once './app/models/movie.model.php'
-require_once './app/models/review.model.php'
-require_once './app/models/movie.view.php'
+require_once './app/models/movie.model.php';
+require_once './app/models/review.model.php';
+require_once './app/models/movie.view.php';
 
 class MovieController{
     private $movieModel;

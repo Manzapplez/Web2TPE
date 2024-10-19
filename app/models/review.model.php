@@ -1,5 +1,5 @@
 <?php
-require_once './app/models/model.php'
+require_once './app/models/model.php';
 
 class reviewModel extends Model{
 

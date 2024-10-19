@@ -1,5 +1,5 @@
 <?php
-require_once './app/helpers/db.helper.php'
+require_once './app/helpers/db.helper.php';
 
 class Model{
     protected $db;

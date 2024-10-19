@@ -1,5 +1,5 @@
 <?php
-require_once './app/helpers/auth.helper.php'
+require_once './app/helpers/auth.helper.php';
 
 class View{
     
