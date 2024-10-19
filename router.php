@@ -4,8 +4,8 @@ require_once './app/controllers/movie.controller.php';
 require_once './app/controllers/review.controller.php';
 require_once './app/controllers/auth.controller.php';
 
-$action = 'reviews'; 
-if (!empty( $_GET['action'])) {
+$action = 'reviews';
+if (!empty($_GET['action'])) {
     $action = $_GET['action'];
 }
 
@@ -32,59 +32,59 @@ Desloguear                     /logout                  auth.controller->logout(
 
 $params = explode('/', $action);
 
-switch($params[0]){
+switch ($params[0]) {
     case 'reviews':
-        $controller= new ReviewController();
-        if(isset($params[1])){
+        $controller = new ReviewController();
+        if (isset($params[1])) {
             $controller->showReview($params[1]);
             break;
         }
         $controller->showReviews();
         break;
-    case 'addReview'
-        $controller= new ReviewController();
+    case 'addReview':
+        $controller = new ReviewController();
         $controller->addReview();
         break;
-    case 'editReview'
-        $controller= new ReviewController();
+    case 'editReview':
+        $controller = new ReviewController();
         $controller->editReview($params[1]);
         break;
-    case 'removeReview'
-        $controller= new ReviewController();
+    case 'removeReview':
+        $controller = new ReviewController();
         $controller->removeReview($params[1]);
         break;
 
     case 'movies':
-        $controller= new MovieController();
-        if(isset($params[1])){
+        $controller = new MovieController();
+        if (isset($params[1])) {
             $controller->showMovie($params[1]);
             break;
         }
         $controller->showMovies();
         break;
-    case 'addMovie'
-        $controller= new MovieController();
+    case 'addMovie':
+        $controller = new MovieController();
         $controller->addMovie();
         break;
-    case 'editMovie'
-        $controller= new MovieController();
+    case 'editMovie':
+        $controller = new MovieController();
         $controller->editMovie($params[1]);
         break;
-    case 'removeMovie'
-        $controller= new MovieController();
+    case 'removeMovie':
+        $controller = new MovieController();
         $controller->removeMovie($params[1]);
         break;
 
-    case 'login'
+    case 'login':
         $controller = new AuthController();
         $controller->login();
         break;
-    case 'auth'
+    case 'auth':
         $controller = new AuthController();
         $controller->auth();
-    break;
-    case 'logout'
+        break;
+    case 'logout':
         $controller = new AuthController();
         $controller->logout();
-    break;
+        break;
 }
