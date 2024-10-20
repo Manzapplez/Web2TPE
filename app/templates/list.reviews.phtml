@@ -3,7 +3,7 @@
 <h4>Reseñas</h4>
 
 <a href="addReview" class="btn btn-success">Agregar</a>
-<!-- esta bien el redirect a addReview? creo que hay que editar el metodo -->
+<!-- errores en el metodo -->
 
 <table class="table">
     <thead>
@@ -28,8 +28,8 @@
 
                 <?php if ($this->session) : ?>
                     <td>
-                        <a href="reviews-edit/<?= $review->id_review ?> " class="btn btn-primary">Editar</a>
-                        <a href="reviews-remove/<?= $review->id_review ?>" class="btn btn-danger"
+                        <a href="editReview/<?= $review->id_review ?> " class="btn btn-primary">Editar</a>
+                        <a href="removeReview/<?= $review->id_review ?>" class="btn btn-danger"
                             onclick="return confirm('¿Estás seguro de que queres borrar esta reseña?');">Borrar</a>
                     </td>
                 <?php endif ?>
