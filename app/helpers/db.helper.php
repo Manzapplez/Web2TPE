@@ -14,6 +14,7 @@ class DbHelper {
         $tables = $query->fetchAll();
         
         if ( count($tables) == 0 ) {
+            $hash = '$2y$10$.2RKdlLgv2uHWtFS7Dp1guCiVsovKghfuXDTJVWNYJQPi0r1MXPKe';
             $sql = <<<END
             -- phpMyAdmin SQL Dump
             -- version 5.2.1
@@ -98,7 +99,7 @@ class DbHelper {
                   --
             
                   INSERT INTO `users` (`id_user`, `username`, `password`) VALUES
-                  (1, 'webadmin', 'admin');
+                  (1, 'webadmin', '$hash');
             
                   --
                   -- Indexes for dumped tables
