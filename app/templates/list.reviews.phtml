@@ -1,2 +1,39 @@
 <?php require './app/templates/header.phtml' ?>
+
+
+<?php if ($this->session) : require $form;
+endif ?>
+
+<h4>Reseñas</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Pelicula</th>
+            <th>Calificacion</th>
+            <th>Cuerpo de la reseña</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <?php foreach ($reviews as $review) : ?>
+            <tr>
+                <!-- $review->id_movie->title no es posible sin editar reviewModel -->
+                <td><a href="movies/<?= $review->id_movie ?>"><?= $review->id_movie ?></a></td>
+                <td><?= $review->rating ?></td>
+                <td><?= $review->body ?></td>
+
+                <?php if ($this->session) : ?>
+                    <td>
+                        <a href="reviews-edit/<?= $review->id_review ?>" type="button">Editar</a>
+                        <a href="reviews-remove/<?= $review->id_review ?>" type="button">Borrar</a>
+                    </td>
+                <?php endif ?>
+            </tr>
+
+        <?php endforeach ?>
+    </tbody>
+
+</table>
+
 <?php require './app/templates/footer.phtml' ?>

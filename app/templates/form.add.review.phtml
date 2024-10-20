@@ -1,0 +1,23 @@
+<form action="reviews-save" method="POST">
+
+    <div class="row">
+
+        <label>De que pelicula es</label>
+        <select required name="id_movie" class="form-control">
+            <option selected disabled>Seleccione la pelicula</option>
+            <?php foreach ($movies as $movie) : ?>
+                <option value="<?= $movie->id_movie ?>"><?= $movie->title ?></option>
+            <?php endforeach ?>
+        </select>
+
+        <label>Calificacion</label>
+        <input required name="rating" type="number" placeholder="Ingrese la calificacion" class="form-control">
+
+        <label>Cuerpo de la reseña</label>
+        <textarea required name="body" placeholder="Ingrese el año" class="form-control" rows="4" cols="50"></textarea>
+
+
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Agregar</button>
+</form>

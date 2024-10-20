@@ -1,0 +1,18 @@
+<form action="reviews-save/<?= $review->id_review ?>" method="POST">
+
+    <!-- EDITAR REVIEW -->
+
+    <div class="row">
+
+        <label>Review a Editar</label>
+        <!-- DROPDOWN CON EL LISTADO DE REVIEWS value="<?= $review->id_movie ?>" -->
+
+        <label>Calificacion</label>
+        <input required name="rating" type="number" placeholder="Ingrese la calificacion" class="form-control" value="<?= $review->rating ?>">
+
+        <label>Cuerpo de la reseña</label>
+        <textarea rows="4" cols="50" required name="body" type="text" placeholder="Ingrese el año" class="form-control" value="<?= $review->body ?>"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Agregar</button>
+</form>

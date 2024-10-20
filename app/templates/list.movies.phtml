@@ -1,0 +1,45 @@
+<?php require './app/templates/header.phtml' ?>
+
+
+<?php if ($this->session) : require $form;
+endif ?>
+
+<h4>Peliculas</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Director</th>
+            <th>Sinopsis</th>
+            <th>Estreno</th>
+            <th>Duracion</th>
+            <th>Genero</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <?php foreach ($movies as $movie) : ?>
+            <tr>
+
+                <td><?= $movie->title ?></td>
+                <td><?= $movie->director ?></td>
+                <td><?= $movie->synopsis ?></td>
+                <td><?= $movie->release_date ?></td>
+                <td><?= $movie->runtime ?></td>
+                <td><?= $movie->genre ?></td>
+
+                <?php if ($this->session) : ?>
+                    <td>
+                        <a href="movies-edit/<?= $movie->id_movie ?>" type="button">Editar</a>
+                        <a href="movies-remove/<?= $movie->id_movie ?>" type="button">Borrar</a>
+                    </td>
+                <?php endif ?>
+            </tr>
+
+        <?php endforeach ?>
+    </tbody>
+
+</table>
+
+<?php require './app/templates/footer.phtml' ?>
