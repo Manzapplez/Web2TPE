@@ -1,27 +1,24 @@
-<form action="movies-save/<?= $movie->id_movie ?>" method="POST">
+<form action="movie-save/<?= $movie->id_movie ?>" method="POST">
+    <!-- action? -->
 
     <div class="row">
-        <!-- TODO -->
-        <!-- Poner como atributo value="<?= $movie->atributo ?>" -->
-        <!-- Poner los atributos REQUIRED NAME -->
+        <label for="title">Titulo</label>
+        <input type="text" id="title" name="title" placeholder="Titulo" value="<?= $movie->title ?>" required>
 
-        <label>Titulo</label>
-        <input type="text" placeholder="Titulo">
+        <label for="director">Director</label>
+        <input type="text" id="director" name="director" placeholder="Director/es" value="<?= $movie->director ?>" required>
 
-        <label>Director</label>
-        <input type="text" placeholder="Director/es">
+        <label for="release_date">Año de Estreno</label>
+        <input type="number" id="release_date" name="release_date" placeholder="AÑO" value="<?= $movie->release_date ?>" required>
 
-        <label>Año de Estreno</label>
-        <input type="number" placeholder="AÑO">
+        <label for="runtime">Duracion</label>
+        <input type="number" id="runtime" name="runtime" placeholder="en MINUTOS" value="<?= $movie->runtime ?>" required>
 
-        <label>Duracion</label>
-        <input type="number" placeholder="en MINUTOS">
+        <label for="genre">Genero</label>
+        <input type="text" id="genre" name="genre" placeholder="Genero/s" value="<?= $movie->genre ?>" required>
 
-        <label>Genero</label>
-        <input type="text" placeholder="Genero/s">
-
-        <label>Sinopsis</label>
-        <textarea required name="body" placeholder="Ingrese el año" class="form-control" rows="4" cols="50"></textarea>
+        <label for="synopsis">Sinopsis</label>
+        <textarea id="synopsis" name="synopsis" class="form-control" rows="4" cols="50" required><?= $movie->synopsis ?></textarea>
 
     </div>
 

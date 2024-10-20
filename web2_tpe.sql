@@ -42,8 +42,10 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`id_movie`, `title`, `director`, `synopsis`, `release_date`, `runtime`, `genre`) VALUES
-(1, 'The Lord of the Rings: The Fellowship of the Ring', 'Peter Jackson', 'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.', '2001', 178, 'Fantasy/Adventure');
-
+(1, 'The Lord of the Rings: The Fellowship of the Ring', 'Peter Jackson', 'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.', '2001', 178, 'Fantasy/Adventure'),
+(2, 'The Lord of the Rings: The Two Towers', 'Peter Jackson', 'The Fellowship is broken, and the remaining members must unite against the dark forces of Sauron.', '2002', 179, 'Fantasy/Adventure'),
+(3, 'The Lord of the Rings: The Return of the King', 'Peter Jackson', 'The epic conclusion of the Lord of the Rings saga where Frodo and Sam reach Mount Doom.', '2003', 201, 'Fantasy/Adventure'),
+(4, 'Alien', 'Ridley Scott', 'In deep space, the crew of the commercial spaceship Nostromo encounters a deadly alien creature after responding to a distress signal on an unknown planet.', '1979', 117, 'Sci-Fi/Horror');
 -- --------------------------------------------------------
 
 --
@@ -62,7 +64,14 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id_review`, `id_movie`, `body`, `rating`) VALUES
-(1, 1, 'Elijah Wood should wear wigs', 4);
+(1, 1, 'Elijah Wood should wear wigs', 4),
+(2, 1, 'An incredible journey with stunning visuals.', 5),
+(3, 2, 'A gripping continuation of the saga.', 5),
+(4, 2, 'Dark and intense, it keeps you on the edge of your seat.', 4),
+(5, 3, 'A perfect ending to a legendary trilogy.', 5),
+(6, 3, 'Epic and emotional, a must-watch.', 5),
+(7, 4, 'A terrifying masterpiece of sci-fi horror.', 5),
+(8, 4, 'The atmosphere is incredibly tense and claustrophobic.', 4);
 
 -- --------------------------------------------------------
 
