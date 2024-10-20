@@ -8,6 +8,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Reseña</th>
             <th>Pelicula</th>
             <th>Calificacion</th>
             <th>Cuerpo de la reseña</th>
@@ -20,6 +21,7 @@
     <tbody>
         <?php foreach ($reviews as $review) : ?>
             <tr>
+                <td><a href="reviews/<?= $review->id_review ?>"><?= htmlspecialchars($review->id_review) ?></a></td>
                 <td><a href="movies/<?= $review->id_movie ?>"><?= htmlspecialchars($review->title) ?></a></td>
                 <td><?= $review->rating ?></td>
                 <td><?= $review->body ?></td>
@@ -28,7 +30,7 @@
                     <td>
                         <a href="reviews-edit/<?= $review->id_review ?> " class="btn btn-primary">Editar</a>
                         <a href="reviews-remove/<?= $review->id_review ?>" class="btn btn-danger"
-                        onclick="return confirm('¿Estás seguro de que queres borrar esta reseña?');">Borrar</a>
+                            onclick="return confirm('¿Estás seguro de que queres borrar esta reseña?');">Borrar</a>
                     </td>
                 <?php endif ?>
             </tr>

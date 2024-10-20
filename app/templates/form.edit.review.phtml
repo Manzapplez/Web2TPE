@@ -1,11 +1,9 @@
-<form action="reviews-save/<?= $review->id_review ?>" method="POST">
-
-    <!-- EDITAR REVIEW -->
+<form action="review-edit/<?= $review->id_review ?>" method="POST">
 
     <div class="row">
 
         <label>Review a Editar</label>
-        <!-- DROPDOWN CON EL LISTADO DE REVIEWS value="<?= $review->id_movie ?>" -->
+        <!-- DROPDOWN CON EL LISTADO DE REVIEWS value="<?= $review->id_review ?>" -->
 
         <label>Calificacion</label>
         <input required name="rating" type="number" placeholder="Ingrese la calificacion" class="form-control" value="<?= $review->rating ?>">

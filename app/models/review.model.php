@@ -26,11 +26,19 @@ class reviewModel extends Model{
         return $reviews;
     }
 
+    // aca tambien
     public function getReview($id) {
         $query = $this->db->prepare('SELECT * FROM reviews WHERE id_review=?');
         $query->execute([$id]);
         
         $review = $query->fetch(PDO::FETCH_OBJ);
+        if ($review) {
+            $movieQuery = $this->db->prepare("SELECT title FROM movies WHERE id_movie = ?");
+            $movieQuery->execute([$review->id_movie]);
+            $movie = $movieQuery->fetch(PDO::FETCH_OBJ);
+            $review->title = $movie ? $movie->title : null;
+        }
+
         return $review;
     }
 

@@ -6,7 +6,7 @@
     <li class="list-group-item item-task">
         <div>
             <h5>Reseña</h5>
-            <p>Pelicula: <?= $review->movie->title ?></p>
+            <p>Pelicula: <a href="movies/<?= $review->id_movie ?>"><?= $review->title ?></a></p>
             <p>Calificacion: <?= $review->rating ?></p>
             <p><?= $review->body ?></p>
         </div>
