@@ -11,14 +11,17 @@
             <th>Estreno</th>
             <th>Duracion</th>
             <th>Genero</th>
+            <?php if ($this->session) : ?>
+                <th>Acciones</th>
+            <?php endif; ?>
+
         </tr>
     </thead>
 
     <tbody>
         <?php foreach ($movies as $movie) : ?>
             <tr>
-
-                <td><?= $movie->title ?></td>
+                <td><a href="movies/<?= $movie->id_movie ?>"><?= $movie->title ?></a></td>
                 <td><?= $movie->director ?></td>
                 <td><?= $movie->synopsis ?></td>
                 <td><?= $movie->release_date ?></td>
@@ -27,8 +30,9 @@
 
                 <?php if ($this->session) : ?>
                     <td>
-                        <a href="movies-edit/<?= $movie->id_movie ?>" type="button">Editar</a>
-                        <a href="movies-remove/<?= $movie->id_movie ?>" type="button">Borrar</a>
+                        <a href="movies-edit/<?= $movie->id_movie ?>" class="btn btn-primary">Editar</a>
+                        <a href="movies-remove/<?= $movie->id_movie ?>" class="btn btn-danger"
+                            onclick="return confirm('¿Estás seguro de que queres borrar esta película?');">Borrar</a>
                     </td>
                 <?php endif ?>
             </tr>

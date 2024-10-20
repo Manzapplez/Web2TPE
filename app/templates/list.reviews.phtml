@@ -8,21 +8,24 @@
             <th>Pelicula</th>
             <th>Calificacion</th>
             <th>Cuerpo de la reseña</th>
+            <?php if ($this->session) : ?>
+                <th>Acciones</th>
+            <?php endif; ?>
         </tr>
     </thead>
 
     <tbody>
         <?php foreach ($reviews as $review) : ?>
             <tr>
-                <!-- $review->id_movie->title no es posible sin editar reviewModel -->
-                <td><a href="movies/<?= $review->id_movie ?>"><?= $review->id_movie ?></a></td>
+                <td><a href="movies/<?= $review->id_movie ?>"><?= htmlspecialchars($review->title) ?></a></td>
                 <td><?= $review->rating ?></td>
                 <td><?= $review->body ?></td>
 
                 <?php if ($this->session) : ?>
                     <td>
-                        <a href="reviews-edit/<?= $review->id_review ?>" type="button">Editar</a>
-                        <a href="reviews-remove/<?= $review->id_review ?>" type="button">Borrar</a>
+                        <a href="reviews-edit/<?= $review->id_review ?> " class="btn btn-primary">Editar</a>
+                        <a href="reviews-remove/<?= $review->id_review ?>" class="btn btn-danger"
+                        onclick="return confirm('¿Estás seguro de que queres borrar esta reseña?');">Borrar</a>
                     </td>
                 <?php endif ?>
             </tr>

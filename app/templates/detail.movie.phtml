@@ -14,4 +14,21 @@
     </li>
 </ul>
 
+<!-- Listado de reseñas de la pelicula, Refactor a otra parte del codigo? -->
+<h5>Reseñas:</h5>
+<ul class="list-group">
+    <?php if (!empty($reviews)): ?>
+        <?php foreach ($reviews as $review): ?>
+            <li class="list-group-item">
+                <div>
+                    <p><strong>Calificación: <?= $review->rating ?></strong></p>
+                    <p><?= $review->body ?></p>
+                </div>
+            </li>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <li class="list-group-item">No hay reseñas para esta película.</li>
+    <?php endif; ?>
+</ul>
+
 <?php require './app/templates/footer.phtml' ?>

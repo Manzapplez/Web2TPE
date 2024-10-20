@@ -5,8 +5,8 @@
 <ul class="list-group">
     <li class="list-group-item item-task">
         <div>
-            <h5><?= $review->id_movie ?></h5> <!-- Poder llamar al titulo de la pelicula -->
-            <p>Pelicula: <?= $review->id_movie ?></p>
+            <h5>Reseña</h5>
+            <p>Pelicula: <?= $review->movie->title ?></p>
             <p>Calificacion: <?= $review->rating ?></p>
             <p><?= $review->body ?></p>
         </div>

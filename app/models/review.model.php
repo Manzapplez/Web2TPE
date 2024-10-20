@@ -3,8 +3,15 @@ require_once './app/models/model.php';
 
 class reviewModel extends Model{
 
+    // En esta funcion ademas de agarrar las reviews tomamos el titulo de las peliculas
+    // asi lo podemos mostrar mas facil :3
     public function getReviews() {
-        $query = $this->db->prepare('SELECT * FROM reviews ORDER BY id_movie');
+        $query = $this->db->prepare('
+            SELECT reviews.*, movies.title 
+            FROM reviews 
+            JOIN movies ON reviews.id_movie = movies.id_movie 
+            ORDER BY reviews.id_movie
+        ');
         $query->execute();
         
         $reviews = $query->fetchAll(PDO::FETCH_OBJ);
