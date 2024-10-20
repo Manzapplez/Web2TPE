@@ -82,7 +82,7 @@ INSERT INTO `reviews` (`id_review`, `id_movie`, `body`, `rating`) VALUES
 CREATE TABLE `users` (
   `id_user` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `username`, `password`) VALUES
-(1, 'webadmin', 'admin');
+(1, 'webadmin', '$2y$10$.2RKdlLgv2uHWtFS7Dp1guCiVsovKghfuXDTJVWNYJQPi0r1MXPKe');
 
 --
 -- Indexes for dumped tables
