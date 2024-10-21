@@ -2,8 +2,7 @@
 
 <h4>Peliculas</h4>
 
-<a href="addMovie" class="btn btn-success">Agregar</a>
-<!--  php session require './app/templates/form.add.movie.phtml' -->
+<?php if ($this->session) : require $form; endif ?>
 
 <table class="table">
     <thead>
@@ -33,7 +32,7 @@
 
                 <?php if ($this->session) : ?>
                     <td>
-                        <a href="editMovie/<?= $movie->id_movie ?>" class="btn btn-primary">Editar</a>
+                        <a href="editMovieForm/<?= $movie->id_movie ?>" class="btn btn-primary">Editar</a>
                         <a href="removeMovie/<?= $movie->id_movie ?>" class="btn btn-danger"
                             onclick="return confirm('¿Estás seguro de que queres borrar esta película?');">Borrar</a>
                     </td>

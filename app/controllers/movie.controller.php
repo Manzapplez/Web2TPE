@@ -37,7 +37,14 @@ class MovieController{
         $genre = $_POST['genre'];
 
         $this->movieModel->addMovie($title,$director,$synopsis,$release_date,$runtime,$genre);
+        header('Location: ' . BASE_URL . 'movies');
     }
+    public function editMovieForm($id){
+        $movie = $this->movieModel->getMovie($id);
+        $movies = $this->movieModel->getMovies();
+        $this->movieView->editMovieForm($movie, $movies);
+    }
+
     public function editMovie($id){
         AuthHelper::verify();
 
@@ -49,10 +56,43 @@ class MovieController{
         $genre = $_POST['genre'];
 
         $this->movieModel->editMovie($title,$director,$synopsis,$release_date,$runtime,$genre,$id);
+        header('Location: ' . BASE_URL . 'movies');
     }
+    /*public function editMovie($id) {
+        AuthHelper::verify();
+
+        // POST, update the movie
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            echo("Entro en el if");
+            $title = $_POST['title'];
+            $director = $_POST['director'];
+            $synopsis = $_POST['synopsis'];
+            $release_date = $_POST['release_date'];
+            $runtime = $_POST['runtime'];
+            $genre = $_POST['genre'];
+            // Update
+            $this->movieModel->editMovie($title, $director, $synopsis, $release_date, $runtime, $genre, $id);
+
+            // Redirect
+            header('Location: ' . BASE_URL . 'movies');
+            exit();
+        } else {
+            // GET, retrieve existing movie data
+            $movie = $this->movieModel->getMovie($id);
+
+            // if the movie !exists
+            if ($movie === null) {
+                header('Location:' . BASE_URL . ' /movies');
+                exit();
+            }
+            require './app/templates/form.edit.movie.phtml';
+        }
+    }
+*/
     public function removeMovie($id){
         AuthHelper::verify();
 
         $this->movieModel->deleteMovie($id);
+        header('Location: ' . BASE_URL . 'movies');
     }
 }

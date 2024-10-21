@@ -3,13 +3,19 @@
     <div class="row">
 
         <label>Review a Editar</label>
-        <!-- DROPDOWN CON EL LISTADO DE REVIEWS value="<?= $review->id_review ?>" -->
+        <label>De que pelicula es</label>
+        <select required name="id_movie" class="form-control">
+            <option selected disabled>Seleccione la pelicula</option>
+            <?php foreach ($movies as $movie) : ?>
+                <option value="<?= $movie->id_movie ?>"><?= $movie->title ?></option>
+            <?php endforeach ?>
+        </select>
 
         <label>Calificacion</label>
         <input required name="rating" type="number" placeholder="Ingrese la calificacion" class="form-control" value="<?= $review->rating ?>">
 
         <label>Cuerpo de la reseña</label>
-        <textarea rows="4" cols="50" required name="body" type="text" placeholder="Ingrese el año" class="form-control" value="<?= $review->body ?>"></textarea>
+        <textarea rows="4" cols="50" required name="body" type="text" placeholder="Ingrese reseña" class="form-control" value="<?= $review->body ?>"></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary mt-2">Agregar</button>
