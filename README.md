@@ -8,8 +8,7 @@ Lorenzi, Alex Martín
 > alorenzi@alumnos.exa.unicen.edu.ar
 ***
 ## Listado de Canciones y Artistas
-En este sitio vas a poder ver un listado con tus **artistas** favoritos y sus respectivas **canciones**. A su vez, los usuarios registrados serán capaces de ingresar nuevos lanzamientos y registrar artistas.
+El usuario será capaz de visualizar un conjunto de **canciones**, cada una perteneciente a un determinado **artista**. A su vez, los usuarios registrados serán capaces de ingresar nuevos lanzamientos y registrar artistas.
 ***
-**TODO**
-+ SQL de la BBDD (exportado de phpMyAdmin)
-+ generar DER (jpeg o pdf)
+## Diagrama Entidad-Relación
+![DER](DER.png)
