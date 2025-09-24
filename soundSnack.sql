@@ -31,7 +31,7 @@ CREATE TABLE `Artists` (
   `date_of_death` date DEFAULT NULL,
   `place_of_birth` varchar(100) NOT NULL,
   PRIMARY KEY (`id_artist`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `Artists` (
 
 LOCK TABLES `Artists` WRITE;
 /*!40000 ALTER TABLE `Artists` DISABLE KEYS */;
+INSERT INTO `Artists` VALUES (1,'Axel Patricio Fernando Witteveen','Axel Patricio Fernando Witteveen, es un cantante y compositor argentino. Ha sido galardonado con cinco Premios Carlos Gardel, un MTV Europe Music Awards, un MTV Latinoamérica, dos 40 principales, un MTV Millennial Awards, un Kids Choice Awards Argentina, un TVyNovelas, un Heat Latin Music Awards, entre otros.','images/artist/axelWitteveen/axelWitteveen.jpg','1977-01-01',NULL,'Rafael Calzada, Almirante Brown, Buenos Aires, Argentina');
 /*!40000 ALTER TABLE `Artists` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +63,7 @@ CREATE TABLE `Songs` (
   PRIMARY KEY (`id_song`),
   KEY `id_artist` (`id_artist`),
   CONSTRAINT `Songs_ibfk_1` FOREIGN KEY (`id_artist`) REFERENCES `Artists` (`id_artist`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +72,7 @@ CREATE TABLE `Songs` (
 
 LOCK TABLES `Songs` WRITE;
 /*!40000 ALTER TABLE `Songs` DISABLE KEYS */;
+INSERT INTO `Songs` VALUES (1,1,'Te Equivocas','La clave para conquistarte',4.16,'Pop/Balada','https://youtu.be/GzmcPHBMx5c?si=2lO9zA0BTdQ8crvZ','images/artist/axelWitteveen/laClaveParaConquistarte.jpg');
 /*!40000 ALTER TABLE `Songs` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -83,4 +85,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-23 13:26:14
+-- Dump completed on 2025-09-26  2:32:24
