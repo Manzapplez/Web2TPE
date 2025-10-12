@@ -1,18 +1,21 @@
 <?php
 
-/*
-Song Model
+/* Maneja la comunicacion con la BBDD de canciones.
+CONTIENE CRUD, PHP + PDO. */
 
-Maneja la comunicacion con la BBDD de canciones.
-Protege y persiste los datos del usuario, asegura la integridad y consistencia de datos.
-Provee métodos para insertar, consultar, actualizar y eliminar datos (CRUD). PHP + PDO.
+class SongModel extends Model
+{
+    // get songs de la db
+    public function getSongs() {}
 
-*/
+    // ABM
+    public function addSong() {}
 
-class SongModel extends Model {
+    public function editSong() {}
 
-    public function __construct()
+    public function removeSong($id)
     {
-        
+        $query = $this->db->prepare('DELETE FROM songs WHERE id_song=?');
+        $query->execute([$id]);
     }
 }

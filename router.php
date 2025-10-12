@@ -2,27 +2,81 @@
 
 require_once './app/config.php';
 require_once '/app/controllers/SongController.php';
-require_once ''; // artist controller
-require_once ''; // auth?
+require_once ''; // /app/controllers/ArtistController.php
+require_once ''; // /app/controllers/AuthController.php
+
+$action = 'listSongs';
+if (!empty($_GET['action'])) {
+    $action = $_GET['action'];
+}
 
 /* TABLA DE RUTEO
 
 ACCION					        URL		        DESTINO
 
-Mostrar todas las canciones 	/songs		    SongController->showSongs()
-Mostrar canción				    /songs/id	    SongController->showSongs(id)
-Cargar canción				    /addSong	    SongController->add()
-Modificar cancion			    /editSong/id	SongController->edit($id)
-Eliminar cancion			    /removeSong/id	SongController->remove($id)
+Mostrar todas las canciones 	/songs		        SongController->showSongs()
+Mostrar canción				    /songs/id	        SongController->showSongs(id)
+Cargar canción				    /addSong	        SongController->addSong()
+Modificar cancion			    /editSong/id	    SongController->editSong($id)
+Eliminar cancion			    /removeSong/id	    SongController->removeSong($id)
 
-Mostrar todos
-Mostrar uno
-Cargar
-Modificar
-Eliminar
+Artistas
 
-Loguear
-Autenticar
-Desloguear
+Loguear                        /login               AuthController->login()
+Autenticacion                  /auth                AuthController->auth()
+Desloguear                     /logout              AuthController->logout()
 
 */
+
+$params = explode('/', $action);
+
+switch ($params[0]) {
+
+    // utilizamos songs tanto para el listado como para el detalle, depende de si viene con params :3
+    case 'songs':
+        $controller = new SongController();
+        $controller->showSongs($params[1] ?? null);
+        break;
+
+    case 'addSong':
+        $controller = new SongController();
+        $controller->addSong();
+        break;
+
+    case 'editSong':
+        $controller = new SongController();
+        $controller->editSong($params[1]);
+        break;
+
+    case 'removeSong':
+        $controller = new SongController();
+        $controller->removeSong($params[1]);
+        break;
+
+    /**
+     * 
+     * 
+     * MÉTODOS DE ARTISTAS
+     * 
+     * 
+     */
+
+    case 'login':
+        $controller = new AuthController();
+        $controller->login();
+        break;
+
+    case 'auth':
+        $controller = new AuthController();
+        $controller->auth();
+        break;
+
+    case 'logout':
+        $controller = new AuthController();
+        $controller->logout();
+        break;
+
+    default:
+        echo "asdafq3twedfsdfsdsssa";
+        break;
+}

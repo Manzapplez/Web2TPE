@@ -4,8 +4,7 @@ require_once 'config.php';
 
 class Model
 {
-    public $db; // TEMPORALMENTE PUBLIC PARA USAR test_deploy.php en terminal
-    // VOLVER A PROTECTED
+    protected $db;
 
     public function __construct()
     {
