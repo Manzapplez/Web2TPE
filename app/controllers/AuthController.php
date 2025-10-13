@@ -1,5 +1,8 @@
 <?php
 
+require_once './app/views/AuthView.php';
+require_once './app/models/UserModel.php';
+
 class AuthController
 {
     private $model;
@@ -14,10 +17,10 @@ class AuthController
     // MUESTRA EL FORM DE LOGIN
     public function login()
     {
-        if (AuthHelper::check()) {
-            header('Location: ' . BASE_URL . 'home');
-            exit;
-        }
+        // if (AuthHelper::check()) {
+        //     header('Location: ' . BASE_URL . 'songs');
+        //     exit;
+        // }
         $this->view->showLogin();
     }
 
@@ -34,15 +37,15 @@ class AuthController
 
         // busca el user por usname
         $user = $this->model->getByUser($username);
-        if (!$user) {
-            $this->view->showLogin('Usuario no encontrado');
-            return;
-        }
+        // if (!$user) {
+        //     $this->view->showLogin('Usuario no encontrado');
+        //     return;
+        // }
 
         // verifica passwd
         if (password_verify($password, $user->password)) {
             AuthHelper::login($user);
-            header('Location: ' . BASE_URL . 'home');
+            header('Location: ' . BASE_URL);
             exit;
         } else {
             $this->view->showLogin('Contraseña incorrecta');
@@ -52,7 +55,7 @@ class AuthController
     public function logout()
     {
         AuthHelper::logout();
-        header('Location: ' . BASE_URL . 'login');
+        header('Location: ' . BASE_URL);
         exit;
     }
 }

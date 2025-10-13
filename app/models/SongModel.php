@@ -1,17 +1,39 @@
 <?php
 
-/* Maneja la comunicacion con la BBDD de canciones.
-CONTIENE CRUD, PHP + PDO. */
+require_once 'Model.php';
+/* php no sabe dónde está model al declarar las clases hijas porque no carga automáticamente todos los archivos 
+a menos que le haga un require/include o tenga un autoloader en config.php, por ahora lo pongo como require */
+
+/* Maneja la comunicacion con la BBDD de canciones. CONTIENE CRUD, PHP + PDO. */
 
 class SongModel extends Model
 {
-    // get songs de la db
-    public function getSongs() {}
+    public function getSongs($id = null)
+    {
+        $query = $this->db->prepare('
+            SELECT songs.*, artists.name 
+            FROM songs 
+            JOIN artists ON songs.id_artist = artists.id_artist 
+            ORDER BY songs.id_artist
+        ');
+        $query->execute();
+
+        $songs = $query->fetchAll(PDO::FETCH_OBJ);
+        return $songs;
+    }
 
     // ABM
-    public function addSong() {}
+    public function addSong($id_artist, $title, $album, $duration, $genre, $video)
+    {
+        $query = $this->db->prepare('INSERT INTO songs (id_artist, title, album, duration, genre, video) VALUES (?,?,?,?,?,?)');
+        $query->execute([$id_artist, $title, $album, $duration, $genre, $video]);
+    }
 
-    public function editSong() {}
+    public function editSong($id_artist, $title, $album, $duration, $genre, $video)
+    {
+        $query = $this->db->prepare('UPDATE songs SET id_artist=?, title=?, album=?, duration=?, genre=?, video=? WHERE id_song=?');
+        $query->execute([$id_artist, $title, $album, $duration, $genre, $video]);
+    }
 
     public function removeSong($id)
     {

@@ -1,26 +1,20 @@
 <?php
 
 require_once './app/models/SongModel.php';
-// require_once './app/models/ArtistModel.php';
+require_once './app/views/SongView.php';
 
 /* Intermediario entre SongView y SongModel, controla el flujo de la aplicación,
 procesa las solicitudes y valida la entrada de datos del usuario.
 Pide al model la info y se la lleva a la view para que muestre. */
-
 class SongController
 {
     private $songModel;
     private $songView;
-    // private $artistModel;
 
     public function __construct()
     {
         $this->songModel = new SongModel();
         $this->songView = new SongView();
-        // $this->artistModel = new ArtistModel();
-
-        /* Al hacer el ADD de SONGS se debe poder seleccionar el ARTISTA a la que pertenecen
-        utilizando <select> que muestra listado de Artistas. */
     }
 
     // utilizamos songs tanto para el listado como para el detalle, depende de si viene con params :3
@@ -31,47 +25,49 @@ class SongController
             $this->songView->showSong($song);
         } else {
             $songs = $this->songModel->getSongs();
-            $this->songView->show($songs);
+            $this->songView->showSongs($songs);
         }
     }
 
     /**
-     * 
-     *         ACCIONES ABM
+     *         ABM
      *         -> VERIFICAMOS LA SESSION DE C/U
      *         -> INSERTAMOS VARIABLES P/ CARGAR (en caso de que sea necesario)
      *         -> ENVIAMOS LOS DATOS AL MODEL, LLAMAMOS AL MÉTODO CORRESPONDIENTE
      *         -> DESPUÉS DE EJECUTAR LA ACCIÓN, REDIRIGIMOS AL LISTADO (/songs)
-     * 
      */
 
     public function addSong()
     {
         AuthHelper::verify();
-        /*
-            $nombreVariable = $_POST['nombreVariable'];
-            $nombreVariable = $_POST['nombreVariable'];
-            $nombreVariable = $_POST['nombreVariable'];
 
-            $this->songModel->addSong($nombreVariable, $nombreVariable, etc.);
-        */
+        $id_artist = $_POST['id_artist'];
+        $title = $_POST['$title'];
+        $album = $_POST['$album'];
+        $duration = $_POST['$duration'];
+        $genre = $_POST['$genre'];
+        $video = $_POST['$video'];
+
+        $this->songModel->addSong($id_artist, $title, $album, $duration, $genre, $video);
 
         header('Location: ' . BASE_URL . 'songs');
+        exit;
     }
 
     public function editSong($id)
     {
         AuthHelper::verify();
-        /*  
-            $nombreVariable = $_POST['nombreVariable'];
-            $nombreVariable = $_POST['nombreVariable'];
-            $nombreVariable = $_POST['nombreVariable'];
-            $nombreVariable = $_POST['nombreVariable'];
+        $id_artist = $_POST['id_artist'];
+        $title = $_POST['$title'];
+        $album = $_POST['$album'];
+        $duration = $_POST['$duration'];
+        $genre = $_POST['$genre'];
+        $video = $_POST['$video'];
 
-            $this->songModel->editSong($nombreVariable, $nombreVariable, etc.);
-        */
+        $this->songModel->editSong($id_artist, $title, $album, $duration, $genre, $video);
 
         header('Location: ' . BASE_URL . 'songs');
+        exit;
     }
 
     public function removeSong($id)
@@ -79,5 +75,6 @@ class SongController
         AuthHelper::verify();
         $this->songModel->removeSong($id);
         header('Location: ' . BASE_URL . 'songs');
+        exit;
     }
 }

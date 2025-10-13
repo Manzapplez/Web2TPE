@@ -1,0 +1,20 @@
+<form action="addSong" method="POST">
+
+    <div>
+
+        <!-- Al hacer el ADD de SONGS se debe poder seleccionar el ARTISTA a la que pertenecen
+        utilizando <select> que muestra listado de Artistas. -->
+        <label>Artista</label>
+        <select required name="id_artista">
+            <option selected disabled>De que artista es la canción?</option>
+            <?php foreach ($artistas as $artista) : ?>
+                <option value="<?= $artista->id_artista ?>"><?= $artista->name ?></option>
+            <?php endforeach ?>
+        </select>
+
+        <!-- <label>VARIABLE</label><input required name="rating" type="number" placeholder="Ingrese la calificacion" class="form-control"> -->
+
+    </div>
+
+    <button type="submit">Agregar</button>
+</form>

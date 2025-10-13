@@ -1,18 +1,25 @@
 <?php
 
+require_once 'View.php';
+
 class SongView extends View
 {
 
-    public function showSong($songs)
+    public function showSongs($songs)
     {
-        require 'templates/songList.phtml';
+                $form= './app/templates/formAddSong.phtml';
+        require './app/templates/songList.phtml';
     }
 
-    public function show($song)
+    public function showSong($song)
     {
-        require 'templates/songDetail.phtml';
+        require './app/templates/songDetail.phtml';
     }
 
-    // functions de add y edit songs
+    // revisar
+    public function editSongForm($song, $songs, $artist){
+        $form = './app/templates/formEditSong.phtml';
+        require './app/templates/songList.phtml';
+    }
 
 }

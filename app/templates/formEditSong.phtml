@@ -1,0 +1,22 @@
+<form action="editSong/<?= $song->id_song ?>" method="POST">
+
+    <div class="row">
+
+        <label>Cancion a Editar</label>
+
+
+        <!-- Al hacer el ADD de SONGS se debe poder seleccionar el ARTISTA a la que pertenecen
+        utilizando <select> que muestra listado de Artistas. -->
+        <label>De que artista es?</label>
+        <select required name="id_artist" class="form-control">
+            <option selected disabled>Seleccione el artista</option>
+            <?php foreach ($artists as $artist) : ?>
+                <option value="<?= $artist->id_artist ?>"><?= $artist->title ?></option>
+            <?php endforeach ?>
+        </select>
+
+        <!-- <label>VARIABLE</label><textarea required name="body" type="text" placeholder="Ingrese reseña" value="<?= $song->body ?>"></textarea> -->
+    </div>
+
+    <button type="submit">Agregar</button>
+</form>

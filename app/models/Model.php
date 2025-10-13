@@ -47,7 +47,7 @@ INSERT INTO `artists` (`id_artist`, `name`, `biography`, `cover`) VALUES
 CREATE TABLE `songs` (
   `id_song` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_artist` smallint(5) UNSIGNED NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `title` varchar(100) NOT NULL,
   `album` varchar(100) NOT NULL,
   `duration` decimal(4,2) DEFAULT NULL,
   `genre` varchar(50) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `songs` (
   CONSTRAINT `Songs_ibfk_1` FOREIGN KEY (`id_artist`) REFERENCES `artists` (`id_artist`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `songs` (`id_song`, `id_artist`, `name`, `album`, `duration`, `genre`, `video`) VALUES
+INSERT INTO `songs` (`id_song`, `id_artist`, `title`, `album`, `duration`, `genre`, `video`) VALUES
 (1, 1, 'Don', 'El Disco de tu Corazón', 3.50, 'Pop', 'https://youtu.be/8-E2ufHz7Bs'),
 (2, 1, 'Perfecta', 'El Disco de tu Corazón', 3.40, 'Pop', 'https://youtu.be/7ShXEEn3AlE'),
 (3, 1, 'Yo te diré', 'Sin Restricciones', 3.30, 'Pop', 'https://youtu.be/n-dWF20u2RU'),

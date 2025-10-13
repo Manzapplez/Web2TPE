@@ -1,18 +1,17 @@
 <?php
 
-require_once './app/config.php';
-require_once '/app/controllers/SongController.php';
-require_once ''; // /app/controllers/ArtistController.php
-require_once ''; // /app/controllers/AuthController.php
+require_once './app/controllers/SongController.php';
+// require_once './app/controllers/ArtistController.php';
+require_once './app/controllers/AuthController.php';
 
-$action = 'listSongs';
+$action = 'songs';
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
 }
 
 /* TABLA DE RUTEO
 
-ACCION					        URL		        DESTINO
+ACCION					        URL		            DESTINO
 
 Mostrar todas las canciones 	/songs		        SongController->showSongs()
 Mostrar canción				    /songs/id	        SongController->showSongs(id)
@@ -53,27 +52,22 @@ switch ($params[0]) {
         $controller->removeSong($params[1]);
         break;
 
-    /**
-     * 
-     * 
-     * MÉTODOS DE ARTISTAS
-     * 
-     * 
-     */
+    // Artist CRUD cases
 
+    // LOGIN, LOGOUT, AUTH.
     case 'login':
         $controller = new AuthController();
         $controller->login();
         break;
 
-    case 'auth':
-        $controller = new AuthController();
-        $controller->auth();
-        break;
-
     case 'logout':
         $controller = new AuthController();
         $controller->logout();
+        break;
+
+    case 'auth':
+        $controller = new AuthController();
+        $controller->auth();
         break;
 
     default:
