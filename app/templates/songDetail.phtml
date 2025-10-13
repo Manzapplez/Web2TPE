@@ -9,7 +9,8 @@
     <p><?= $song->album ?></p>
     <p><?= $song->duration ?></p>
     <p><?= $song->genre ?></p>
-    <p><?= $song->video ?></p>
+    <p><a target="_blank" href="<?= $song->video ?>"><?= $song->video ?></a></p>
+
 </div>
 
 <?php require './app/templates/footer.phtml' ?>

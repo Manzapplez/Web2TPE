@@ -15,9 +15,9 @@
             <th>Duración</th>
             
             <!-- ABM ACCIONES -->
-            <?php if ($this->session) : ?>
+            <?php //if ($this->session) : ?>
             <th>Acciones</th>
-            <?php endif; ?>
+            <?php //endif; ?>
 
         </tr>
     </thead>
@@ -37,13 +37,13 @@
                     <td><?= $song->duration ?></td>
 
                     <!-- SI ESTA ACTIVA LA SESSION MOSTRAR BOTONES DE ABM -->
-                    <?php if ($this->session) : ?>
+                    <?php //if ($this->session) : ?>
                         <td>
-                            <a href="editSongForm/<?= $song->id_song ?> " class="btn btn-primary">Editar</a>
+                            <a href="editSong/<?= $song->id_song ?> " class="btn btn-primary">Editar</a>
                             <a href="removeSong/<?= $song->id_song ?>" class="btn btn-danger"
                                 onclick="return confirm('¿Estás seguro de que queres borrar esta canción?');">Borrar</a>
                         </td>
-                    <?php endif ?>
+                    <?php //endif ?>
 
                 </tr>
             <?php endforeach; ?>

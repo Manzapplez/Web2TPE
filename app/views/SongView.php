@@ -7,7 +7,6 @@ class SongView extends View
 
     public function showSongs($songs)
     {
-                $form= './app/templates/formAddSong.phtml';
         require './app/templates/songList.phtml';
     }
 
@@ -16,10 +15,13 @@ class SongView extends View
         require './app/templates/songDetail.phtml';
     }
 
-    // revisar
-    public function editSongForm($song, $songs, $artist){
-        $form = './app/templates/formEditSong.phtml';
-        require './app/templates/songList.phtml';
+    public function showFormAddSong($artists)
+    {
+        require './app/templates/formAddSong.phtml';
     }
 
+    public function showFormEditSong($song, $artists)
+    {
+        require './app/templates/formEditSong.phtml';
+    }
 }

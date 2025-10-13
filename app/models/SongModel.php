@@ -10,16 +10,27 @@ class SongModel extends Model
 {
     public function getSongs($id = null)
     {
-        $query = $this->db->prepare('
-            SELECT songs.*, artists.name 
-            FROM songs 
-            JOIN artists ON songs.id_artist = artists.id_artist 
+        if ($id) {
+            // UNA sola canción, songs/id
+            $query = $this->db->prepare('
+            SELECT songs.*, artists.name
+            FROM songs
+            JOIN artists ON songs.id_artist = artists.id_artist
+            WHERE songs.id_song = ?
+        ');
+            $query->execute([$id]);
+            return $query->fetch(PDO::FETCH_OBJ);
+        } else {
+            // TODAS las canciones, songs/
+            $query = $this->db->prepare('
+            SELECT songs.*, artists.name
+            FROM songs
+            JOIN artists ON songs.id_artist = artists.id_artist
             ORDER BY songs.id_artist
         ');
-        $query->execute();
-
-        $songs = $query->fetchAll(PDO::FETCH_OBJ);
-        return $songs;
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_OBJ);
+        }
     }
 
     // ABM
@@ -29,11 +40,12 @@ class SongModel extends Model
         $query->execute([$id_artist, $title, $album, $duration, $genre, $video]);
     }
 
-    public function editSong($id_artist, $title, $album, $duration, $genre, $video)
+    public function editSong($id, $id_artist, $title, $album, $duration, $genre, $video)
     {
-        $query = $this->db->prepare('UPDATE songs SET id_artist=?, title=?, album=?, duration=?, genre=?, video=? WHERE id_song=?');
-        $query->execute([$id_artist, $title, $album, $duration, $genre, $video]);
+        $query = $this->db->prepare('UPDATE songs SET id_artist = ?, title = ?, album = ?, duration = ?, genre = ?, video = ? WHERE id_song = ?');
+        $query->execute([$id_artist, $title, $album, $duration, $genre, $video, $id]);
     }
+
 
     public function removeSong($id)
     {
