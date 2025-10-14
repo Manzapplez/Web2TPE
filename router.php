@@ -19,7 +19,11 @@ Cargar canción				    /addSong	        SongController->addSong()
 Modificar cancion			    /editSong/id	    SongController->editSong($id)
 Eliminar cancion			    /removeSong/id	    SongController->removeSong($id)
 
-Artistas
+Mostrar todos los artistas      /
+Mostrar artista                 /
+Cargar artista                  /
+Modificar artista               /
+Eliminar artista                /
 
 Loguear                        /login               AuthController->login()
 Autenticacion                  /auth                AuthController->auth()
@@ -31,7 +35,8 @@ $params = explode('/', $action);
 
 switch ($params[0]) {
 
-    // utilizamos songs tanto para el listado como para el detalle, depende de si viene con params :3
+    // Songs CRUD cases
+    // utilizamos songs tanto para el listado como para el detalle, depende de si viene con params
     case 'songs':
         $controller = new SongController();
         $controller->showSongs($params[1] ?? null);

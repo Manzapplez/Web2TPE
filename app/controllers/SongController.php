@@ -18,7 +18,7 @@ class SongController
         $this->songView = new SongView();
     }
 
-    // utilizamos showSongs tanto para el listado como para el detalle, depende de si viene con params :3
+    // utilizamos showSongs tanto para el listado como para el detalle, depende de si viene con params
     public function showSongs($id = null)
     {
         if ($id) {
