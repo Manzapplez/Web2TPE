@@ -1,0 +1,36 @@
+ <nav>
+    <ul>
+        <li><a href="">artistas</a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        {if $isFormLogin} 
+            <li><a href="home">Ingreso</a></li>
+        {else}
+            <li><a href="userRegistration">Registrarse</a></li>
+        {/if}
+    </ul>
+</nav>
+
+ <!-- NAV -->
+    <nav>
+        <!-- Public Access -->
+        <li><a href="songs">Canciones</a></li> 
+        <li><a href="artists">Artistas</a></li>
+        apreto artistas se publica una tabla con sus canciones disponibles
+        apreto una cancion de ese artista y se publican sus datos
+        <!-- Admin Access -->
+     <!--   <?php if ($this->session) : ?>
+            <li>
+                <a href="">Logout (<?= $_SESSION['USER_NAME'] ?>)</a>
+            </li>
+        <?php else : ?>
+            <li>
+                <a href="">Login</a>
+            </li>
+        <?php endif; ?> -->
+    </nav>
+
+
+    Artistas | Registrarse | contacto | nosotros 

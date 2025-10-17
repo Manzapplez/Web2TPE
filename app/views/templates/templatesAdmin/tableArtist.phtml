@@ -1,0 +1,30 @@
+<table>
+    <tr>
+        <td>ID Artista</td>
+        <td><?= $artist->id_artist ?></td>
+    </tr>
+    <tr>
+        <td>Nombre</td>
+        <td><?= $artist->name ?></td>
+    </tr>
+    <tr>
+        <td>Biografía</td>
+        <td><?= $artist->biography ?></td>
+    </tr>
+    <tr>
+        <td>Portada</td>
+        <td><img src="<?= $artist->cover ?>" alt="Portada de <?= $artist->name ?>"></td>
+    </tr>
+    <tr>
+        <td>Fecha de nacimiento</td>
+        <td><?= $artist->date_of_birth ?></td>
+    </tr>
+    <tr>
+        <td>Fecha de fallecimiento</td>
+        <td><?= $artist->date_of_death ?></td>
+    </tr>
+    <tr>
+        <td>Lugar de nacimiento</td>
+        <td><?= $artist->place_of_birth ?></td>
+    </tr>
+</table>
