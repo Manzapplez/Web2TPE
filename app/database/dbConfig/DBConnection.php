@@ -47,7 +47,7 @@ final class DBConnection
         $tables = $query->fetchAll(PDO::FETCH_COLUMN);
 
         if (count($tables) === 0) {
-            $sqlFile = __DIR__ . '/db/soundSnack.sql';
+            $sqlFile = __DIR__ . '/../soundSnack.sql';
             if (!file_exists($sqlFile)) {
                 error_log("Archivo SQL no encontrado: $sqlFile");
                 return;

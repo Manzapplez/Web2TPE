@@ -13,7 +13,16 @@ final class ViewHome
     {
         require_once __DIR__ . '/../templates/templatesHome/header.phtml';
         require_once __DIR__ . '/../templates/templatesHome/nav.phtml';
-        require_once __DIR__ . '/../templates/templatesUser/login.phtml'; // formulario de login
+        require_once __DIR__ . '/../templates/templatesUser/login.phtml'; 
+        require_once __DIR__ . '/../templates/templatesHome/footer.phtml';
+    }
+
+    
+    public function showRegister(): void
+    {
+        require_once __DIR__ . '/../templates/templatesHome/header.phtml';
+        require_once __DIR__ . '/../templates/templatesHome/nav.phtml';
+        require_once __DIR__ . '/../templates/templatesUser/register.phtml'; 
         require_once __DIR__ . '/../templates/templatesHome/footer.phtml';
     }
 }

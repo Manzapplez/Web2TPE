@@ -16,6 +16,7 @@ class Router
     private const ROUTES = [
         'home'          => 'showHome',
         'login'         => 'showLogin',
+        'logIn'         => 'showLoginIn',
         'register'      => 'showRegister',
     ];
 
@@ -81,6 +82,7 @@ class Router
 
         if (array_key_exists($route, self::ADMIN_ROUTES)) {
             if (!$isAdmin) {
+                echo "no es administrador";
                 $this->controlError->show404();
                 return;
             }

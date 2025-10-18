@@ -15,19 +15,6 @@ El usuario será capaz de visualizar un conjunto de **canciones** (ítems), cada
 
 
 
-app/
-    controllers/
-    database/
-    models/
-    routes/
-    templates/
-    view/
-public/
-    assets/
-        img/
-        vids/
-    css/
-    js/
-    .htaccess
-    index.php
-README.md
+registar 
+“webadmin” y contraseña “admin” para pruebas.
+
