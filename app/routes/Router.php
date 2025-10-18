@@ -1,61 +1,62 @@
 <?php
-require_once __DIR__ . '/../controllers/views/ControlAdmin.php';
-require_once __DIR__ . '/../controllers/views/ControlHome.php';
-require_once __DIR__ . '/../controllers/views/ControlError.php';
+require_once './app/controllers/UserController.php';
+require_once './app/controllers/ArtistController.php';
+require_once './app/controllers/SongController.php';
+require_once './app/views/ErrorView.php';
 
 class Router
 {
-    private ControlHome $controlHome;
-    private ControlAdmin $controlAdmin;
-    private ControlError $controlError;
-    private string $action;
+    private UserController $userController;
+    private ArtistController $artistController;
+    private SongController $songController;
 
+    private string $action;
     private static string $baseUrl;
 
-    // Rutas accesibles para cualquier usuario
-    private const ROUTES = [
-        'home'          => 'showHome',
-        'login'         => 'showLogin',
-        'logIn'         => 'showLoginIn',
-        'register'      => 'showRegister',
-    ];
+    //Array asociativo multidimensional para almacenar todas las actions disponibles para el usuario
+    private const ACTIONS = [
+        'home'          => ['controller' => 'userController',   'method' => 'showHome'],
+        'login'         => ['controller' => 'userController',   'method' => 'showLogin'],
+        'register'      => ['controller' => 'userController',   'method' => 'showRegister'],
+        'logIn'         => ['controller' => 'userController',   'method' => 'loginUser'],
+        'logout'        => ['controller' => 'userController',   'method' => 'logout'],
+        'registerUser'  => ['controller' => 'userController',   'method' => 'registerUser'],
 
-    // Rutas exclusivas para administradores
-    private const ADMIN_ROUTES = [
-        'admin'        => 'showAdmin',
-        'addArtist'    => 'insertArtist',
-        'updateArtist' => 'updateArtist',
-        'deleteArtist' => 'deleteArtistByName'
+        'admin'         => ['controller' => 'artistController', 'method' => 'showArtist'],
+        'addArtist'     => ['controller' => 'artistController', 'method' => 'insertArtist'],
+        'updateArtist'  => ['controller' => 'artistController', 'method' => 'updateArtist'],
+        'deleteArtist'  => ['controller' => 'artistController', 'method' => 'deleteArtistByName'],
+
+        'songs'         => ['controller' => 'songController',   'method' => 'showSongs'],
+        'song'          => ['controller' => 'songController',   'method' => 'showSongById'],
+        'addSong'       => ['controller' => 'songController',   'method' => 'addSong'],
+        'editSong'      => ['controller' => 'songController',   'method' => 'editSong'],
+        'removeSong'    => ['controller' => 'songController',   'method' => 'removeSong']
     ];
 
     public function __construct()
     {
-        // Instancia los controladores de vista
-        $this->controlHome = new ControlHome();
-        $this->controlAdmin = new ControlAdmin();
-        $this->controlError = new ControlError();
+        $this->userController   = new UserController();
+        $this->artistController = new ArtistController();
+        $this->songController   = new SongController();
 
-        // Define la URL base de la aplicación
         self::defineBaseUrl();
-
-        // Define la acción solicitada por el usuario
         $this->defineAction();
     }
 
-    // Método estático para calcular la URL base de la aplicación
+    // Determina la URL base de la aplicación
     private static function defineBaseUrl(): void
     {
         self::$baseUrl = '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT']
             . dirname($_SERVER['PHP_SELF']) . '/';
     }
 
-    // Devuelve la URL base de la aplicación
     public static function getBaseUrl(): string
     {
         return self::$baseUrl;
     }
 
-    // Define la acción solicitada a partir de la variable $_GET['action']
+    // Determina la acción solicitada por el usuario
     private function defineAction(): void
     {
         $uri = $_SERVER['REQUEST_URI'];
@@ -64,42 +65,25 @@ class Router
         $this->action = $path ?: 'home';
     }
 
-    // Evalúa la acción solicitada y llama al método correspondiente del controlador de vista
+    // Evalúa la acción solcitada y llama al método correspondiente de forma dinamica
     public function evaluateAction(): void
     {
-        // Verifica si hay usuario logueado y es administrador
-        $isAdmin = isset($_SESSION['username']) && $_SESSION['username'] === 'administrador';
+        $route = explode("/", $this->action)[0];
 
-        // Separa la acción por '/' para soportar sub-rutas
-        $parse = explode("/", $this->action);
-        $route = $parse[0];
-
-        // Verifica si la ruta existe en el array de rutas válidas
-        if (!array_key_exists($route, self::ROUTES) && !array_key_exists($route, self::ADMIN_ROUTES)) {
-            $this->controlError->show404();
+        if (!isset(self::ACTIONS[$route])) {
+            ErrorView::show404();
             return;
         }
 
-        if (array_key_exists($route, self::ADMIN_ROUTES)) {
-            if (!$isAdmin) {
-                echo "no es administrador";
-                $this->controlError->show404();
-                return;
-            }
-            $method = self::ADMIN_ROUTES[$route];
-            if (method_exists($this->controlAdmin, $method)) {
-                $this->controlAdmin->$method();
-            } else {
-                $this->controlError->show500();
-            }
+        $controllerName = self::ACTIONS[$route]['controller'];
+        $method         = self::ACTIONS[$route]['method'];
+
+        $controller = $this->$controllerName;
+
+        if (method_exists($controller, $method)) {
+            $controller->$method();
         } else {
-            // Si no es administrador, usamos el controlador general
-            $method = self::ROUTES[$route];
-            if (method_exists($this->controlHome, $method)) {
-                $this->controlHome->$method();
-            } else {
-                $this->controlError->show500();
-            }
+            ErrorView::show500();
         }
     }
 }

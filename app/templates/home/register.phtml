@@ -1,0 +1,55 @@
+<section class="login-section">
+    <div class="login-header">
+        <h3>Registro de usuario nuevo</h3>
+    </div>
+
+    <form
+        id="userRegistration"
+        class="login-form"
+        action="registerUser"
+        method="post"
+        enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="userName">Nombre de usuario</label>
+            <input
+                name="userName"
+                id="userName"
+                type="text"
+                placeholder="Nombre de usuario"
+                minlength="5"
+                required />
+        </div>
+
+        <div class="form-group">
+            <label for="userEmail">Correo electrónico</label>
+            <input
+                name="userEmail"
+                id="userEmail"
+                type="email"
+                placeholder="Correo electrónico"
+                required />
+        </div>
+
+        <div class="form-group">
+            <label for="userPassword">Contraseña</label>
+            <input
+                name="userPassword"
+                id="userPassword"
+                type="password"
+                placeholder="Contraseña"
+                minlength="5"
+                required />
+        </div>
+
+        <div class="form-group">
+            <label for="photoUser">Foto de perfil (opcional)</label>
+            <input
+                name="photoUser"
+                id="photoUser"
+                type="file"
+                accept="image/*" />
+        </div>
+
+        <button type="submit" class="btn-submit">Registrar</button>
+    </form>
+</section>

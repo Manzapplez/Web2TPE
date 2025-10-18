@@ -1,0 +1,32 @@
+ <nav>
+     <ul>
+         <li><a href="">artistas</a></li>
+         <li><a href=""></a></li>
+         <li><a href=""></a></li>
+         <li><a href=""></a></li>
+         <li><a href=""></a></li>
+         {if $isFormLogin}
+         <li><a href="home">Ingreso</a></li>
+         {else}
+         <li><a href="register">Registrarse</a></li>
+         {/if}
+     </ul>
+ </nav>
+ <!-- NAV -->
+ <nav>
+
+     <!-- Public Access -->
+     <li><a href="songs">Canciones</a></li>
+     <li><a href="artists">Artistas</a></li>
+
+     <!-- Admin Access -->
+     <?php if ($this->session) : ?>
+         <li class="nav-item">
+             <a class="nav-link" href="logout">Logout (<?= $_SESSION['USER_NAME'] ?>)</a>
+         </li>
+     <?php else : ?>
+         <li class="nav-item">
+             <a class="nav-link" href="login">Login</a>
+         </li>
+     <?php endif; ?>
+ </nav>

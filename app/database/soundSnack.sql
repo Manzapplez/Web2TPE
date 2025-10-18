@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2025 a las 02:31:03
+-- Tiempo de generación: 18-10-2025 a las 12:44:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,75 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `artists`
---
-
-CREATE TABLE `artists` (
-  `id_artist` smallint(5) UNSIGNED NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `biography` text DEFAULT NULL,
-  `cover` varchar(255) DEFAULT NULL,
-  `date_of_birth` date NOT NULL,
-  `date_of_death` date DEFAULT NULL,
-  `place_of_birth` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `artists`
---
-
-INSERT INTO `artists` (`id_artist`, `name`, `biography`, `cover`, `date_of_birth`, `date_of_death`, `place_of_birth`) VALUES
-(1, 'Axel Patricio Fernando Witteveen', 'Axel Patricio Fernando Witteveen, es un cantante y compositor argentino. Ha sido galardonado con cinco Premios Carlos Gardel, un MTV Europe Music Awards, un MTV Latinoamérica, dos 40 principales, un MTV Millennial Awards, un Kids Choice Awards Argentina, un TVyNovelas, un Heat Latin Music Awards, entre otros.', 'public/assets/img/coverArtist/axelWitteveen.jpg', '1977-01-01', NULL, 'Rafael Calzada, Almirante Brown, Buenos Aires, Argentina'),
-(2, 'Airbag', 'Airbag es una banda argentina de Rock fundada en Don Torcuato, Gran Buenos Aires, en el año 1999. La banda fue fundada e integrada por los hermanos Gastón Sardelli, Patricio Sardelli y Guido Sardelli donde empezaron con los primeros ensayos a mediados de los años noventa bajo el nombre de Los Nietos de Chuck, donde hacían covers de Chuck Berry, The Beatles y Creedence, entre otros.', 'public/assets/img/coverArtist/airbag.jpg', '1999-01-01', NULL, 'Don Torcuato, Buenos Aires, Argentina'),
-(3, 'Tan Biónica', 'Tan Biónica es un grupo musical de rock argentino surgido en Buenos Aires en el año 2001 formado por Chano, Seby, Bambi y Diega. Desde 2016 el grupo estuvo en un impasse hasta el 17 de marzo de 2023, cuando Chano se presentó en el Lollapalooza Argentina y anunció oficialmente el regreso de la banda.', 'public/assets/img/coverArtist/tanBionica.jpg', '0000-00-00', NULL, 'Buenos Aires, Argentina'),
-(4, 'Miranda!', 'Miranda! es un dúo argentino de pop formado en 2001 integrado por Ale Sergi y Juliana Gattas.', 'public/assets/img/coverArtist/miranda.jpg', '0000-00-00', NULL, 'Buenos Aires, Argentina'),
-(5, 'Bad Bunny', 'Bad Bunny nació en San Juan, Puerto Rico, el 10 de marzo de 1994. Es compositor y cantante de música urbana, sobre todo trap y reggaetón.', 'public/assets/img/coverArtist/badbunny.jpg', '1994-03-10', NULL, 'San Juan, Puerto Rico'),
-(6, 'Lady Gaga', 'Stefani Joanne Angelina Germanotta, conocida por su nombre artístico Lady Gaga, es una cantante, compositora, productora, bailarina, actriz, activista y diseñadora de moda estadounidense.', 'public/assets/img/coverArtist/ladygaga.jpg', '1986-03-28', NULL, 'Nueva York, Estados Unidos');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `songs`
---
-
-CREATE TABLE `songs` (
-  `id_song` smallint(5) UNSIGNED NOT NULL,
-  `id_artist` smallint(5) UNSIGNED NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `album` varchar(100) NOT NULL,
-  `duration` decimal(4,2) DEFAULT NULL,
-  `genre` varchar(50) NOT NULL,
-  `video` varchar(255) DEFAULT NULL,
-  `cover` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `songs`
---
-
-INSERT INTO `songs` (`id_song`, `id_artist`, `title`, `album`, `duration`, `genre`, `video`, `cover`) VALUES
-(1, 1, 'La Clave Para Conquistarte', 'La Clave Para Conquistarte', 4.16, 'Pop/Balada', 'https://youtu.be/XqCoOoYCwKA?si=ouDSSKD38sm5Gm6D', 'public/assets/img/coverSong/axelWitteveen/laClaveParaConquistarte.jpg'),
-(2, 1, 'Hoy Es Hoy', 'Hoy', 3.50, 'Pop', 'https://youtu.be/i4YX0vrDqgc?si=LeVPPueNzVs4Tnti', 'public/assets/img/coverSong/axelWitteveen/hoyEsHoy.jpg'),
-(3, 1, 'Dulce Amargo', 'Amo', 4.12, 'Pop/Rock', 'https://youtu.be/RTdh9QD6338?si=bafnB8nkYRErXwYt', 'public/assets/img/coverSong/axelWitteveen/dulceAmargo.jpg'),
-(4, 2, 'Víctimas', 'Hola Mundo', 3.55, 'Pop/Rock', 'https://youtu.be/oVQbqVL3Ifs?si=bjb-vOKfFjJPDNPN', 'public/assets/img/coverSong/tanBionica/victimas.jpg'),
-(5, 2, 'Tus Horas Mágicas', 'Hola Mundo', 4.02, 'Pop', 'https://youtu.be/trvkG1hHzPo?si=FE_1-kMKfXevFp6s', 'public/assets/img/coverSong/tanBionica/tusHorasMagicas.jpg'),
-(6, 2, 'Arruinarse', 'Canciones del Huracán', 3.48, 'Pop/Rock', 'https://youtu.be/tkcLP9risaA?si=KYh4wwy9HV1wL9Y2', 'public/assets/img/coverSong/tanBionica/arruinarse.jpg'),
-(7, 3, 'Algo Personal', 'Libertad', 3.45, 'Rock', 'https://youtu.be/xl9TOQgw8pE?si=JYe_TIrgHTIYj4K6', 'public/assets/img/coverSong/airbag/algopersonal.jpg'),
-(8, 3, 'La Moda del Montón', 'Libertar', 4.01, 'Rock', 'https://youtu.be/V-Q8McPur38?si=4YNu9YkGyAsUz4eo', 'public/assets/img/coverSong/airbag/laModaDelMonton.jpg'),
-(9, 3, 'Mi Sensación', 'Una Hora a Tokyo', 3.57, 'Rock', 'https://youtu.be/35JNhNQEjt8?si=cBH_tNHFSh_KFSUz', 'public/assets/img/coverSong/airbag/miSensacion.jpg'),
-(10, 4, 'Don', 'El Disco de tu Corazón', 3.50, 'Pop', 'https://youtu.be/8-E2ufHz7Bs', 'public/assets/img/coverSong/miranda/don.jpg'),
-(11, 4, 'Perfecta', 'El Disco de tu Corazón', 3.40, 'Pop', 'https://youtu.be/7ShXEEn3AlE', 'public/assets/img/coverSong/miranda/perfecta.jpg'),
-(12, 4, 'Yo te diré', 'Sin Restricciones', 3.30, 'Pop', 'https://youtu.be/n-dWF20u2RU', 'public/assets/img/coverSong/miranda/yotedere.jpg'),
-(13, 5, 'Dakiti', 'El Último Tour del Mundo', 3.25, 'Reggaetón', 'https://youtu.be/TmKh7lAwnBI', 'public/assets/img/coverSong/badbunny/dakiti.jpg'),
-(14, 5, 'Tití Me Preguntó', 'Un Verano Sin Ti', 4.00, 'Reggaetón', 'https://youtu.be/hs6alRuYcBo', 'public/assets/img/coverSong/badbunny/titiMePregunto.jpg'),
-(15, 5, 'La Canción Ficticia', 'Un Verano Sin Ti', 3.45, 'Reggaetón', 'https://youtu.be/example', 'public/assets/img/coverSong/badbunny/laCancionFicticia.jpg'),
-(16, 6, 'Poker Face', 'The Fame', 3.58, 'Pop', 'https://youtu.be/bESGLojNYSo', 'public/assets/img/coverSong/ladygaga/pokerFace.jpg'),
-(17, 6, 'Bad Romance', 'The Fame Monster', 4.54, 'Pop', 'https://youtu.be/qrO4YZeyl0I', 'public/assets/img/coverSong/ladygaga/badRomance.jpg'),
-(18, 6, 'Abracadabra', 'Mayhem', 3.43, 'Electropop', 'https://www.youtube.com/watch?v=vBynw9Isr28', 'public/assets/img/coverSong/ladygaga/abracadabra.jpg');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `users`
 --
 
@@ -105,21 +36,15 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `profile_photo`) VALUES
+(6, 'webadmin', 'webadmin@gmail.com', '$2y$10$6Fu7HhYzw..eB3TtdQDuG.gTzpaDkve2C08Cxqah27z8iqXbekIa6', 'assets/img/covers/users/webadmin.png');
+
+--
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `artists`
---
-ALTER TABLE `artists`
-  ADD PRIMARY KEY (`id_artist`);
-
---
--- Indices de la tabla `songs`
---
-ALTER TABLE `songs`
-  ADD PRIMARY KEY (`id_song`),
-  ADD KEY `fk_songs_artist` (`id_artist`);
 
 --
 -- Indices de la tabla `users`
@@ -132,32 +57,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT de la tabla `artists`
---
-ALTER TABLE `artists`
-  MODIFY `id_artist` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `songs`
---
-ALTER TABLE `songs`
-  MODIFY `id_song` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `songs`
---
-ALTER TABLE `songs`
-  ADD CONSTRAINT `fk_songs_artist` FOREIGN KEY (`id_artist`) REFERENCES `artists` (`id_artist`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `id_user` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
