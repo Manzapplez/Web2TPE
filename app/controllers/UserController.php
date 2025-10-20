@@ -27,17 +27,17 @@ class UserController
         $photo    = $_FILES['photoUser'] ?? null;
 
         if ($this->userModel->userNameExists($name)) {
-            $this->view->showUserAlreadyExists($name);
+            ErrorView::userAlreadyExists();
             return;
         }
 
         if ($this->userModel->emailExists($email)) {
-            $this->view->showEmailAlreadyExists($email);
+            ErrorView::emailAlreadyExists();
             return;
         }
 
         $uploadDir   = "assets/img/covers/users/";
-        $defaultPhoto = "/web2TPE/assets/img/covers/users/defaultUser.jpg";
+        $defaultPhoto = "/soundSnack/assets/img/covers/users/defaultUser.jpg";
         $photoPath    = $defaultPhoto;
 
         $hasPhoto = $photo && isset($photo['name']) && $photo['error'] === UPLOAD_ERR_OK;
@@ -47,11 +47,11 @@ class UserController
             if ($uploadedPath !== null) {
                 $photoPath = $uploadedPath;
             } else {
-                ErrorView::showPhotoUploadError();
+                ErrorView::photoUploadError();
                 return;
             }
         } else if ($photo && $photo['error'] !== UPLOAD_ERR_NO_FILE) {
-            ErrorView::showPhotoUploadError();
+            ErrorView::photoUploadError();
             return;
         }
 
@@ -66,9 +66,9 @@ class UserController
         $user = $this->userModel->getUserByName($name);
 
         if ($user !== null) {
-            $this->view->showUserProfile($user);
+            $this->view->userProfile($user);
         } else {
-            ErrorView::showUserNotFound();
+            ErrorView::userNotFound();
         }
     }
 

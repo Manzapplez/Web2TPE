@@ -50,11 +50,11 @@ class ArtistModel
         $limit = max(1, $limit);
 
         $sql = "SELECT id_artist, name, biography, cover, date_of_birth, date_of_death, place_of_birth
-                FROM artists
-                LIMIT ?";
+            FROM artists
+            LIMIT $limit";
+
         try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([$limit]);
+            $stmt = $this->db->query($sql);
             while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
                 $artistsList[] = $row;
             }
@@ -62,8 +62,10 @@ class ArtistModel
             error_log("Error al obtener los artistas con límite: " . $e->getMessage());
             return [];
         }
+
         return $artistsList;
     }
+
 
     // Obtiene el artista por nombre 
     public function getArtistByName(string $name): ?object
@@ -77,6 +79,22 @@ class ArtistModel
             return $row ?: null;
         } catch (PDOException $e) {
             error_log("Error al buscar artista '$name': " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // Obtiene el artista por ID
+    public function getArtistById(int $id): ?object
+    {
+        $sql = "SELECT id_artist, name, biography, cover, date_of_birth, date_of_death, place_of_birth
+            FROM artists WHERE id_artist = ?";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$id]);
+            $row = $stmt->fetch(PDO::FETCH_OBJ);
+            return $row ?: null;
+        } catch (PDOException $e) {
+            error_log("Error al buscar artista con ID '$id': " . $e->getMessage());
             return null;
         }
     }

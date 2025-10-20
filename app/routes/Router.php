@@ -28,7 +28,9 @@ class Router
         'addArtist'     => ['controller' => 'artistController', 'method' => 'insertArtist'],
         'updateArtist'  => ['controller' => 'artistController', 'method' => 'updateArtist'],
         'deleteArtist'  => ['controller' => 'artistController', 'method' => 'deleteArtistByName'],
-        'viewArtist'  => ['controller' => 'artistController', 'method' => 'getArtistByName'],
+        'viewArtistById' => ['controller' => 'artistController', 'method' => 'getArtistById'],
+        'viewArtistByName'   => ['controller' => 'artistController', 'method' => 'getArtistByName'],
+        'viewArtists'   => ['controller' => 'artistController', 'method' => 'getArtistsLimit'],
 
         'songs'         => ['controller' => 'songController',   'method' => 'showSongs'],
         'song'          => ['controller' => 'songController',   'method' => 'showSongById'],

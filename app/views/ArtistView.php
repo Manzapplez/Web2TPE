@@ -1,31 +1,31 @@
 <?php
 
-
 class ArtistView
 {
-
-
-    public function __construct()
-    {
-        //     $this->artistController = new ArtistController();
-
-        //   $this->authHelper = new AuthHelper();
-    }
-
-    public function showArtistId(int $id): void
-    {
-        // $this->viewAdmin->showArtistId($id);
-    }
-
     public function showArtistCount(int $count): void
     {
-        // $this->viewAdmin->showArtistCount($count);
+        $user = $_SESSION['user'] ?? null;
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/messages/artistCount.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
 
-    public function showAllArtists(array $artists): void
+    public function showArtists($artists): void
     {
-        //   $this->viewAdmin->showAllArtists($artists);
+        $user = $_SESSION['user'] ?? null;
+
+        if ($artists && !is_array($artists)) {
+            $artists = [$artists];
+        }
+
+        require_once './app/templates/home/header.phtml';
+        require './app/templates/admin/tableArtists.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
+
+
 
     public function showArtistAlreadyExists(string $name): void
     {
@@ -34,12 +34,23 @@ class ArtistView
 
     public function showArtistNotFound(string $name): void
     {
-        //    $this->viewAdmin->showArtistNotFound($name);
+        $user = $_SESSION['user'] ?? null;
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/messages/artistNotFound.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
 
-    public function showArtist()
+    public function showSuccess($artists): void
     {
-
-        echo "operacion exitosa";
+        $user = $_SESSION['user'] ?? null;
+        if ($artists && !is_array($artists)) {
+            $artists = [$artists];
+        }
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/messages/operationSuccessful.phtml';
+        require './app/templates/admin/tableArtists.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
 }

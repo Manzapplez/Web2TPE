@@ -1,6 +1,6 @@
 <section class="login-section">
     <div class="login-header">
-        <h3>Registro de usuario nuevo</h3>
+        <h3>New User Registration</h3>
     </div>
 
     <form
@@ -9,40 +9,41 @@
         action="registerUser"
         method="post"
         enctype="multipart/form-data">
+
         <div class="form-group">
-            <label for="userName">Nombre de usuario</label>
+            <label for="userName">Username</label>
             <input
                 name="userName"
                 id="userName"
                 type="text"
-                placeholder="Nombre de usuario"
+                placeholder="Enter your username"
                 minlength="5"
                 required />
         </div>
 
         <div class="form-group">
-            <label for="userEmail">Correo electrónico</label>
+            <label for="userEmail">Email</label>
             <input
                 name="userEmail"
                 id="userEmail"
                 type="email"
-                placeholder="Correo electrónico"
+                placeholder="Enter your email"
                 required />
         </div>
 
         <div class="form-group">
-            <label for="userPassword">Contraseña</label>
+            <label for="userPassword">Password</label>
             <input
                 name="userPassword"
                 id="userPassword"
                 type="password"
-                placeholder="Contraseña"
+                placeholder="Enter your password"
                 minlength="5"
                 required />
         </div>
 
         <div class="form-group">
-            <label for="photoUser">Foto de perfil (opcional)</label>
+            <label for="photoUser">Profile Photo (optional)</label>
             <input
                 name="photoUser"
                 id="photoUser"
@@ -50,6 +51,6 @@
                 accept="image/*" />
         </div>
 
-        <button type="submit" class="btn-submit">Registrar</button>
+        <button type="submit" class="btn-submit">Register</button>
     </form>
 </section>

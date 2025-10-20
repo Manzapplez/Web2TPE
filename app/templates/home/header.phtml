@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoundSnack</title>
+
     <link rel="stylesheet" href="app/css/homeStyle.css">
     <link rel="stylesheet" href="app/css/formStyle.css">
     <link rel="stylesheet" href="app/css/adminStyle.css">
@@ -15,27 +16,43 @@
         <div class="header-container">
             <div class="site-title">
                 <h1><a href="home">SoundSnack</a></h1>
-                <h2>Tu música, a un clic</h2>
+                <p>Tu música, a un clic</p>
             </div>
 
             <div class="user-info">
                 <?php if ($user): ?>
-                    <!-- Si la sesión se encuentra activa -->
+                    <!-- Si la sesión está activa -->
                     <div class="user-details">
-                        <p class="username"><?= isset($user['name']) ? htmlspecialchars($user['name']) : 'Usuario' ?></p>
+                        <p class="username">
+                            <?= isset($user['name']) ? htmlspecialchars($user['name']) : 'Usuario' ?>
+                        </p>
                         <img class="profile-pic"
-                            src="<?= isset($user['profilePhoto']) && !empty($user['profilePhoto']) ? htmlspecialchars($user['profilePhoto']) : 'assets/img/covers/users/default.jpg' ?>"
-                            alt="Foto de perfil" />
+                            src="<?= isset($user['profilePhoto']) && !empty($user['profilePhoto'])
+                                        ? htmlspecialchars($user['profilePhoto'])
+                                        : 'assets/img/covers/users/default.jpg' ?>"
+                            alt="Foto de perfil de <?= htmlspecialchars($user['name'] ?? 'usuario') ?>" />
                         <p class="email"><?= isset($user['email']) ? htmlspecialchars($user['email']) : '' ?></p>
-                        <button class="btn-logout"><a href="logOut">Cerrar sesión</a></button>
+
+                        <div class="logout-button">
+                            <a class="btn btn-logout" href="logOut">Log Out</a>
+                        </div>
                     </div>
+
                 <?php else: ?>
-                    <!-- Si la sesión no se encuentra activa -->
+                    <!-- Si la sesión no está activa -->
                     <div class="user-details">
                         <p class="username">Guest4821</p>
                         <img class="profile-pic" src="assets/img/covers/users/default.jpg" alt="Foto de perfil genérica" />
                         <p class="email">guest4821@example.com</p>
-                        <button class="btn-login"><a href="login">Iniciar sesión</a></button>
+
+                        <div class="auth-buttons">
+                            <div class="login-button">
+                                <a class="btn btn-login" href="login">Sign In</a>
+                            </div>
+                            <div class="register-button">
+                                <a class="btn btn-register" href="register">Sign Up</a>
+                            </div>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>

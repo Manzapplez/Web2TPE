@@ -1,66 +1,74 @@
 <?php
 class ErrorView
 {
-    // Error al intentar iniciar sesión con usuario o contraseña incorrectos
-    public static function showInvalidCredentials(): void
+    public static function photoUploadError(): void
     {
+        $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
-        //  require_once './app/templates/home/nav.phtml'; (da error por las variable utilizadas en el template)
-        require_once './app/templates/home/login.phtml';
-        echo "Usuario o contraseña incorrectos."; //en rojo
-        require_once './app/templates/home/article.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/messages/photoUploadError.phtml';
+        require_once './app/templates/home/register.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 
-    // Error al subir foto de perfil
-    public static function showPhotoUploadError(): void
+    public static function coverUploadError(): void
     {
-        // require_once __DIR__ . '/../../views/errors/photoUploadError.phtml';
-        echo "Error al subir la foto de perfil.";
+        $user = $_SESSION['user'] ?? null;
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/messages/coverUploadError.phtml';
+        require_once './app/templates/home/register.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
 
-    // Usuario no encontrado
-    public static function showUserNotFound(): void
-    {
-        // require_once __DIR__ . '/../../views/errors/userNotFound.phtml';
-        echo "Usuario no encontrado.";
-    }
-
-    // Error genérico
-    public static function showError(): void
-    {
-        // require_once __DIR__ . '/../../views/errors/genericError.phtml';
-        echo "Ha ocurrido un error. Intente nuevamente.";
-    }
-
-    // Muestra error 404 (Página no encontrada)
     public static function show404(): void
     {
-        // require_once __DIR__ . '/../../views/errors/404View.php';
-        echo "Página no encontrada.";
+        require_once './app/templates/messages/show404.phtml';
     }
 
-    // Muestra error 500 (Error interno del servidor)
     public static function show500(): void
     {
-        // require_once __DIR__ . '/../../views/errors/500View.php';
-        echo "Error interno del servidor.";
+        require_once './app/templates/messages/show500.phtml';
     }
 
-    // Acceso denegado
-    public static function accessDenied(): void
+    public static function failedLogin(): void
     {
-        // require_once __DIR__ . '/../../views/errors/accessDenied.phtml';
-        echo "Acceso denegado. Inicie sesión para continuar.";
+        $user = $_SESSION['user'] ?? null;
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/messages/failedLogin.phtml';
+        require_once './app/templates/home/login.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
 
-    public static function showSuccess(): void {}
-    public static function showCoverUploadError(): void
+    public static function userAlreadyExists(): void
     {
-        echo "Error al subir la imagen de perfil. Por favor, intenta nuevamente.</p>";
+        $user = $_SESSION['user'] ?? null;
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/messages/userAlreadyExist.phtml';
+        require_once './app/templates/home/register.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
 
-    public static function failedLogin() {
-        
+    public static function emailAlreadyExists(): void
+    {
+        $user = $_SESSION['user'] ?? null;
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/messages/emailAlreadyExists.phtml';
+        require_once './app/templates/home/register.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
+
+    public static function showError(): void
+    {
+        $user = $_SESSION['user'] ?? null;
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/messages/genericError.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
+
+    public static function userNotFound() {}
 }

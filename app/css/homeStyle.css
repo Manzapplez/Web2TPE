@@ -1,122 +1,163 @@
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  flex-wrap: wrap;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
-.site-title h1,
-.site-title h2 {
-  margin: 0;
+body {
+  background-color: #0f0f0f;
+  color: #f1f1f1;
+}
+
+header {
+  background: linear-gradient(90deg, #111, #1b1b1b);
+  border-bottom: 2px solid #ff005c;
+  padding: 15px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.site-title h1 a {
+  text-decoration: none;
+  color: #ff005c;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.site-title h1 a:hover {
+  color: #fff;
+  text-shadow: 0 4px 10px rgba(255, 0, 92, 0.6);
+  transform: translateY(-2px);
+}
+
+.site-title p {
+  font-size: 0.9rem;
+  color: #ccc;
 }
 
 .user-info {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 1rem;
 }
 
 .user-details {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
-  text-align: center;
+  gap: 15px;
+}
+
+.username {
+  font-weight: 600;
+  color: #fff;
+}
+
+.email {
+  font-size: 0.8rem;
+  color: #aaa;
 }
 
 .profile-pic {
-  width: 80px;
-  height: 80px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid #ff005c;
 }
 
-button {
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s;
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-button:hover {
-  background-color: #0056b3;
+.auth-buttons > div {
+  display: flex;
+  align-items: center;
 }
 
-button a {
+.logout-button {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  color: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0 20px;
+  height: 40px;
+  min-width: 100px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
-@media (max-width: 600px) {
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
+.btn-login {
+  background-color: #ff005c;
+  color: #fff;
+  border: none;
+}
 
-  .user-info {
-    justify-content: flex-start;
-  }
+.btn-login:hover {
+  background-color: #ff3380;
+}
+
+.btn-register {
+  background-color: transparent;
+  border: 2px solid #ff005c;
+  color: #ff005c;
+}
+
+.btn-register:hover {
+  background-color: #ff005c;
+  color: #fff;
+}
+
+.btn-logout {
+  background-color: #444;
+  color: #fff;
+  border: 2px solid #ff005c;
+}
+
+.btn-logout:hover {
+  background-color: #ff005c;
 }
 
 footer {
-  background-color: #f0f0f0;
-  padding: 1rem 2rem;
+  background-color: #111;
+  border-top: 2px solid #ff005c;
+  padding: 20px 30px;
   text-align: center;
+  color: #ccc;
   font-size: 0.9rem;
-  color: #333;
-  border-top: 1px solid #ccc;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
 }
 
 footer p,
 footer address {
-  margin: 0.2rem 0;
-  line-height: 1.4;
+  margin: 5px 0;
+  color: #ccc;
+  transition: all 0.3s ease;
 }
 
-footer a {
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-header {
-  background-color: #f0f0f0;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid #ccc;
-}
-
-header .header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-header .site-title h1,
-header .site-title h2 {
-  margin: 0;
-}
-
-header .site-title h1 a {
-  text-decoration: none;
-  color: #000;
-}
-
-header .site-title h1 a:hover {
-  color: #007bff;
-}
-
-header .site-title h2 {
-  font-weight: normal;
-  font-size: 1rem;
-  color: #555;
+footer p:hover,
+footer address:hover {
+  color: #ff005c;
+  text-shadow: 0 2px 6px rgba(255, 0, 92, 0.6);
 }

@@ -7,7 +7,7 @@ class ArtistController
 {
     private ArtistModel $artistModel;
     private ArtistView $artistView;
-    private const DEFAULT_COVER = "assets/img/covers/artist/default.jpg";
+    const DEFAULT_COVER = '/soundSnack/assets/img/covers/artists/default.jpg';
     private const COVER_UPLOAD_DIR = "assets/img/covers/artist/";
 
     public function __construct()
@@ -16,20 +16,21 @@ class ArtistController
         $this->artistView = new ArtistView();
     }
 
-    public function getArtistIdByName()
+    public function getArtistById()
     {
-        $name = $_POST['name'] ?? null;
-
-        if (empty($name)) {
+        $id = $_POST['id_artist'] ?? null;
+        if (empty($id) || !is_numeric($id) || (int)$id <= 0) {
             ErrorView::showError();
             return;
         }
 
-        if ($this->artistModel->artistExists($name)) {
-            $result = $this->artistModel->getArtistIdByName($name);
-            $result !== null ? $this->artistView->showArtistId($result) : ErrorView::showError();
+        $id = (int)$id;
+        $artist = $this->artistModel->getArtistById($id);
+
+        if ($artist !== null) {
+            $this->artistView->showArtists($artist);
         } else {
-            $this->artistView->showArtistNotFound($name);
+            $this->artistView->showArtistNotFound($id);
         }
     }
 
@@ -42,13 +43,13 @@ class ArtistController
     public function getArtistsLimit()
     {
         $limit = $_POST['limit'] ?? null;
-
         if (empty($limit) || !is_numeric($limit) || (int)$limit <= 0) {
             ErrorView::showError();
             return;
         }
 
         $limit = (int)$limit;
+
         $totalArtists = $this->artistModel->getArtistsCount();
 
         if ($totalArtists === 0) {
@@ -61,7 +62,7 @@ class ArtistController
         }
 
         $artists = $this->artistModel->getArtistsLimit($limit);
-        !empty($artists) ? $this->artistView->showAllArtists($artists) : ErrorView::showError();
+        !empty($artists) ? $this->artistView->showArtists($artists) : ErrorView::showError();
     }
 
     public function getArtistByName()
@@ -75,7 +76,7 @@ class ArtistController
 
         if ($this->artistModel->artistExists($name)) {
             $result = $this->artistModel->getArtistByName($name);
-            $result !== null ? $this->artistView->showArtist($result) : ErrorView::showError();
+            $result !== null ? $this->artistView->showArtists($result) : ErrorView::showError();
         } else {
             $this->artistView->showArtistNotFound($name);
         }
@@ -105,21 +106,37 @@ class ArtistController
         if ($hasCover) {
             $uploadedPath = FileUploader::handleCoverUpload($cover, $name, self::COVER_UPLOAD_DIR);
             if ($uploadedPath === null) {
-                ErrorView::showPhotoUploadError();
+                ErrorView::photoUploadError();
                 return;
             }
+        } else {
+            $uploadedPath = self::DEFAULT_COVER;
         }
 
         $result = $this->artistModel->insertArtist(
             $name,
             $biography,
-            $hasCover ? $uploadedPath : self::DEFAULT_COVER,
+            $uploadedPath,
             $date_of_birth,
             $date_of_death,
             $place_of_birth
         );
 
-        $result ? ErrorView::showSuccess() : ErrorView::showError();
+        if ($result) {
+
+            $artist = (object)[
+                'id_artist'      => '-',
+                'name'           => $name,
+                'biography'      => $biography,
+                'cover'          => $uploadedPath,
+                'date_of_birth'  => $date_of_birth,
+                'date_of_death'  => $date_of_death,
+                'place_of_birth' => $place_of_birth
+            ];
+            $this->artistView->showSuccess($artist);
+        } else {
+            ErrorView::showError();
+        }
     }
 
     public function deleteArtistByName()
@@ -131,53 +148,60 @@ class ArtistController
             return;
         }
 
-        if ($this->artistModel->artistExists($name)) {
+        $artist = $this->artistModel->getArtistByName($name);
+
+        if ($artist !== null) {
             $result = $this->artistModel->deleteArtistByName($name);
-            $result ? ErrorView::showSuccess() : ErrorView::showError();
+
+            if ($result) {
+                $this->artistView->showSuccess($artist);
+            } else {
+                ErrorView::showError();
+            }
         } else {
             $this->artistView->showArtistNotFound($name);
         }
     }
-
     public function updateArtist()
     {
-        $name            = $_POST['name'] ?? null;
+        $artistId        = $_POST['id_artist'] ?? null; 
+        $newName         = $_POST['name'] ?? null;      
         $newBiography    = $_POST['biography'] ?? null;
         $newCover        = $_FILES['cover'] ?? null;
         $newDateOfBirth  = $_POST['date_of_birth'] ?? null;
         $newDateOfDeath  = $_POST['date_of_death'] ?? null;
         $newPlaceOfBirth = $_POST['place_of_birth'] ?? null;
 
-        if (empty($name)) {
+        if (empty($artistId) || !is_numeric($artistId) || (int)$artistId <= 0) {
             ErrorView::showError();
             return;
         }
 
-        if (!$this->artistModel->artistExists($name)) {
-            $this->artistView->showArtistNotFound($name);
-            return;
-        }
+        $artistId = (int)$artistId;
 
-        $artistId = $this->artistModel->getArtistIdByName($name);
-        if ($artistId === null) {
-            ErrorView::showError();
+        $artistBeforeUpdate = $this->artistModel->getArtistById($artistId);
+        if ($artistBeforeUpdate === null) {
+            $this->artistView->showArtistNotFound($artistId);
             return;
         }
 
         $updated = false;
+
+        if (!empty($newName)) {
+            $updated = $this->artistModel->updateArtistName($artistId, $newName) || $updated;
+        }
 
         if (!empty($newBiography)) {
             $updated = $this->artistModel->updateArtistBiography($artistId, $newBiography) || $updated;
         }
 
         $hasCover = $newCover && isset($newCover['name']) && $newCover['error'] === UPLOAD_ERR_OK;
-
         $coverPath = $hasCover
-            ? FileUploader::handleCoverUpload($newCover, $name, self::COVER_UPLOAD_DIR)
-            : self::DEFAULT_COVER;
+            ? FileUploader::handleCoverUpload($newCover, $newName ?? $artistBeforeUpdate->name, self::COVER_UPLOAD_DIR)
+            : $artistBeforeUpdate->cover; 
 
         if ($hasCover && $coverPath === null) {
-            ErrorView::showCoverUploadError();
+            ErrorView::coverUploadError();
             return;
         }
 
@@ -195,6 +219,11 @@ class ArtistController
             $updated = $this->artistModel->updateArtistPlaceOfBirth($artistId, $newPlaceOfBirth) || $updated;
         }
 
-        $updated ? ErrorView::showSuccess() : ErrorView::showError();
+        if ($updated) {
+            $artistAfterUpdate = $this->artistModel->getArtistById($artistId);
+            $this->artistView->showSuccess([$artistBeforeUpdate, $artistAfterUpdate]);
+        } else {
+            ErrorView::showError();
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 class FileUploader
 {
-    private const BASE_URL = '/web2TPE/';
+    private const BASE_URL = '/soundSnack/';
 
     // Sube un archivo a la carpeta indicada, creando la carpeta si no existe.
     public static function handleCoverUpload(array $file, string $entityName, string $uploadDir): ?string

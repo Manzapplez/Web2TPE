@@ -1,83 +1,75 @@
-.admin-artist {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 1rem 2rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+.artist-table {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: #1b1b1b;
+  color: #f1f1f1;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.admin-artist h2 {
-  margin-bottom: 0.5rem;
-  color: #333;
-  font-size: 1.5rem;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 0.3rem;
+.artist-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #333;
+  vertical-align: top;
 }
 
-.admin-artist p {
-  margin-bottom: 1rem;
-  color: #555;
+.artist-table tr:first-child td {
+  font-weight: bold;
+  background: #111;
+  color: #ff005c;
 }
 
-.form-block {
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+.artist-table img.artist-cover {
+  max-width: 150px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  margin-bottom: 0.3rem;
-  font-weight: 500;
-  color: #333;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  outline: none;
-  transition:
-    border-color 0.3s,
-    box-shadow 0.3s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-button {
-  padding: 0.6rem 1.2rem;
+.artist-separator {
   border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  align-self: flex-start;
+  height: 1px;
+  background-color: #333;
+  margin: 30px auto;
+  max-width: 800px;
 }
 
-button:hover {
-  background-color: #0056b3;
+.artist-table td:nth-child(2):nth-of-type(3) {
+  text-align: justify;
+}
+
+.admin-section textarea {
+  min-height: 120px;
+  padding: 10px 15px;
+  border-radius: 50px;
+  border: 2px solid #444;
+  background-color: #1b1b1b;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.admin-section textarea:focus {
+  border-color: #ff005c;
+  box-shadow: 0 0 10px rgba(255, 0, 92, 0.5);
+}
+
+.admin-section select {
+  height: 45px;
+  padding: 0 15px;
+  border-radius: 50px;
+  border: 2px solid #444;
+  background-color: #1b1b1b;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.admin-section select:focus {
+  border-color: #ff005c;
+  box-shadow: 0 0 10px rgba(255, 0, 92, 0.5);
 }
