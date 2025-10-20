@@ -70,5 +70,11 @@ class ErrorView
         require_once './app/templates/home/footer.phtml';
     }
 
-    public static function userNotFound() {}
+    public static function showMaintenance(): void
+    {
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require './app/templates/messages/maintenance.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
 }

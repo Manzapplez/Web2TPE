@@ -12,13 +12,23 @@ final class DBConnection
     private function __construct()
     {
         try {
+            // Conexión inicial con el servidor MySQL sin especificar base de datos
+            $dsnWithoutDB = DBConfig::getDSNWithoutDB();
             $this->db = new PDO(
-                DBConfig::getDSN(),
-                DBConfig::USER,
-                DBConfig::PASSWORD,
+                $dsnWithoutDB,
+                DBConfig::getUser(),
+                DBConfig::getPassword(),
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
+            //creacion de base de datos y tablas 
             $this->deploy();
+            // Reconeccion con la base de datos recientemente creada
+            $this->db = new PDO(
+                DBConfig::getDSN(),
+                DBConfig::getUser(),
+                DBConfig::getPassword(),
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
         } catch (PDOException $e) {
             error_log("No se pudo conectar a la base de datos: " . $e->getMessage());
         }
@@ -32,41 +42,46 @@ final class DBConnection
         return self::$instance;
     }
 
-    //Inicia una conexión a la base de datos y retorna un objeto PDO.
-    public static function openConnection(): ?PDO
+    // Método para reconectar a la base de datos ya creada//Inicia una conexión a la base de datos y retorna un objeto PDO.
+    private function openConnection(): PDO
     {
-        return self::getInstance()->db;
+        return new PDO(
+            DBConfig::getDSN(),
+            DBConfig::getUser(),
+            DBConfig::getPassword(),
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
     }
 
     //PHP cierra la conexión PDO automáticamente al destruir el objeto, no se requiere un método closeConnection
 
-    // Autodeploy: crea las tablas si la base de datos está vacía.
+    // Autodeploy: crea la base de datos y tablas si es necesario.
     private function deploy(): void
     {
-        $query = $this->db->query('SHOW TABLES');
-        $tables = $query->fetchAll(PDO::FETCH_COLUMN);
+        $sqlFile = __DIR__ . '/../soundSnack.sql';
+        if (!file_exists($sqlFile)) {
+            error_log("Archivo SQL no encontrado: $sqlFile");
+            return;
+        }
 
-        if (count($tables) === 0) {
-            $sqlFile = __DIR__ . '/../soundSnack.sql';
-            if (!file_exists($sqlFile)) {
-                error_log("Archivo SQL no encontrado: $sqlFile");
-                return;
-            }
+        $sql = file_get_contents($sqlFile);  // Lee todo el contenido del archivo SQL como un string.
+        $statements = explode(';', $sql); // Cada comando SQL termina con ';', se separan las sentencias.
 
-            $sql = file_get_contents($sqlFile);  // Lee todo el contenido del archivo SQL como un string.
-            $statements = explode(';', $sql); // Cada comando SQL termina con ';', se separan las sentencias.
-
-            foreach ($statements as $stmt) { // Itera sobre cada comando SQL.
-                $stmt = trim($stmt); // Elimina espacios en blanco para evitar errores.
-                if ($stmt) { // Evalúa que el string no esté vacío.
-                    try {
-                        $this->db->exec($stmt); // Ejecuta el comando en la base de datos.
-                    } catch (PDOException $e) {
-                        error_log("Error ejecutando SQL: " . $e->getMessage());
-                    }
+        foreach ($statements as $stmt) { // Itera sobre cada comando SQL.
+            $stmt = trim($stmt); // Elimina espacios en blanco para evitar errores.
+            if ($stmt) { // Evalúa que el string no esté vacío.
+                try {
+                    $this->db->exec($stmt); // Ejecuta el comando en la base de datos.
+                } catch (PDOException $e) {
+                    error_log("Error ejecutando SQL: " . $e->getMessage());
                 }
             }
-            error_log("Base de datos desplegada automáticamente.");
         }
+        error_log("Base de datos desplegada automáticamente.");
+    }
+
+    public function getPDO(): ?PDO
+    {
+        return $this->db;
     }
 }

@@ -25,13 +25,6 @@ class ArtistView
         require_once './app/templates/home/footer.phtml';
     }
 
-
-
-    public function showArtistAlreadyExists(string $name): void
-    {
-        //      $this->viewAdmin->showArtistAlreadyExists($name);
-    }
-
     public function showArtistNotFound(string $name): void
     {
         $user = $_SESSION['user'] ?? null;
@@ -52,5 +45,42 @@ class ArtistView
         require './app/templates/admin/tableArtists.phtml';
         require_once './app/templates/admin/sectionArtist.phtml';
         require_once './app/templates/home/footer.phtml';
+    }
+
+    public function showArtistAlreadyExists(): void
+    {
+        $user = $_SESSION['user'] ?? null;
+
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/messages/artistAlreadyExists.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
+
+    public function showArtistsList($artists, int $limit, int $totalArtists): void
+    {
+        $user = $_SESSION['user'] ?? null;
+
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/admin/listArtist.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
+
+
+    public function showArtistDetail($songs): void
+    {
+        $user = $_SESSION['user'] ?? null;
+        /*
+        if (!$artist || !is_object($artist)) {
+            ErrorView::showError();
+            return;
+        }*/
+        echo "entre";
+        /*
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/admin/tableArtists.phtml';
+        require_once './app/templates/home/footer.phtml';*/
     }
 }

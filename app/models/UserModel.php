@@ -8,7 +8,8 @@ class UserModel
 
     public function __construct()
     {
-        $this->db = DBConnection::openConnection();
+        $connection = DBConnection::getInstance();
+        $this->db = $connection->getPDO();
     }
 
     /* Verifica si un nombre de usuario ya existe en la base de datos. */

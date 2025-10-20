@@ -9,9 +9,9 @@ class ArtistModel
 
     public function __construct()
     {
-        $this->db = DBConnection::openConnection();
+        $connection = DBConnection::getInstance();
+        $this->db = $connection->getPDO();
     }
-
 
     // Obtiene el id del artista por nombre o retorna null si falla la consulta
     public function getArtistIdByName(string $name): ?int

@@ -25,12 +25,14 @@ class Router
         'logIn'         => ['controller' => 'authController',   'method' => 'logInUser'],
         'logOut'        => ['controller' => 'authController',   'method' => 'logOut'],
 
-        'addArtist'     => ['controller' => 'artistController', 'method' => 'insertArtist'],
-        'updateArtist'  => ['controller' => 'artistController', 'method' => 'updateArtist'],
-        'deleteArtist'  => ['controller' => 'artistController', 'method' => 'deleteArtistByName'],
-        'viewArtistById' => ['controller' => 'artistController', 'method' => 'getArtistById'],
-        'viewArtistByName'   => ['controller' => 'artistController', 'method' => 'getArtistByName'],
-        'viewArtists'   => ['controller' => 'artistController', 'method' => 'getArtistsLimit'],
+        'addArtist'         => ['controller' => 'artistController', 'method' => 'insertArtist'],
+        'updateArtist'      => ['controller' => 'artistController', 'method' => 'updateArtist'],
+        'deleteArtist'      => ['controller' => 'artistController', 'method' => 'deleteArtistByName'],
+        'viewArtistById'    => ['controller' => 'artistController', 'method' => 'getArtistById'],
+        'viewArtistByName'  => ['controller' => 'artistController', 'method' => 'getArtistByName'],
+        'viewArtists'       => ['controller' => 'artistController', 'method' => 'getArtistsLimit'],
+        'listArtists'       => ['controller' => 'artistController', 'method' => 'getListArtists'],
+        'artistDetail'       => ['controller' => 'artistController', 'method' => 'getArtistDetails'],
 
         'songs'         => ['controller' => 'songController',   'method' => 'showSongs'],
         'song'          => ['controller' => 'songController',   'method' => 'showSongById'],
@@ -74,8 +76,9 @@ class Router
     // Evalúa la acción solcitada y llama al método correspondiente de forma dinamica
     public function evaluateAction(): void
     {
-        $route = explode("/", $this->action)[0];
-
+        $segments = explode("/", $this->action);
+        $route = $segments[0];
+        $params = array_slice($segments, 1);
         if (!isset(self::ACTIONS[$route])) {
             ErrorView::show404();
             return;
@@ -87,7 +90,7 @@ class Router
         $controller = $this->$controllerName;
 
         if (method_exists($controller, $method)) {
-            $controller->$method();
+            $controller->$method($params);
         } else {
             ErrorView::show500();
         }

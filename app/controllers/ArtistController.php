@@ -97,7 +97,7 @@ class ArtistController
         }
 
         if ($this->artistModel->artistExists($name)) {
-            $this->artistView->showArtistAlreadyExists($name);
+            $this->artistView->showArtistAlreadyExists();
             return;
         }
 
@@ -164,8 +164,8 @@ class ArtistController
     }
     public function updateArtist()
     {
-        $artistId        = $_POST['id_artist'] ?? null; 
-        $newName         = $_POST['name'] ?? null;      
+        $artistId        = $_POST['id_artist'] ?? null;
+        $newName         = $_POST['name'] ?? null;
         $newBiography    = $_POST['biography'] ?? null;
         $newCover        = $_FILES['cover'] ?? null;
         $newDateOfBirth  = $_POST['date_of_birth'] ?? null;
@@ -198,7 +198,7 @@ class ArtistController
         $hasCover = $newCover && isset($newCover['name']) && $newCover['error'] === UPLOAD_ERR_OK;
         $coverPath = $hasCover
             ? FileUploader::handleCoverUpload($newCover, $newName ?? $artistBeforeUpdate->name, self::COVER_UPLOAD_DIR)
-            : $artistBeforeUpdate->cover; 
+            : $artistBeforeUpdate->cover;
 
         if ($hasCover && $coverPath === null) {
             ErrorView::coverUploadError();
@@ -225,5 +225,50 @@ class ArtistController
         } else {
             ErrorView::showError();
         }
+    }
+
+    public function getListArtists($params)
+    {
+        $limit = isset($params[0]) && is_numeric($params[0]) ? intval($params[0]) : 5;
+
+        if ($limit < 1) {
+            ErrorView::show404();
+            return;
+        }
+
+        $totalArtists = $this->artistModel->getArtistsCount();
+
+        if ($limit > $totalArtists) {
+            $limit = $totalArtists;
+        }
+
+        $artists = $this->artistModel->getArtistsLimit($limit);
+
+        if (!empty($artists)) {
+            $this->artistView->showArtistsList($artists, $limit, $totalArtists);
+        } else {
+            ErrorView::showMaintenance();
+        }
+    }
+
+
+    public function getArtistDetails($params)
+    {
+        var_dump($params, "entre");
+        /*
+        if (!$id) {
+            ErrorView::showError();
+            return;
+        }
+
+        // Obtener las canciones del artista
+        $songs = $this->artistModel->getSongsByArtistId($id);
+
+        if (!empty($songs)) {
+            $this->artistView->showArtistSongs($songs);
+        } else {
+            ErrorView::showError();
+        }
+    }*/
     }
 }
