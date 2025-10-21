@@ -21,56 +21,191 @@ class UserController
 
     public function registerUser(): void
     {
-        $name     = $_POST['userName'] ?? '';
-        $email    = $_POST['userEmail'] ?? '';
-        $password = $_POST['userPassword'] ?? '';
-        $photo    = $_FILES['photoUser'] ?? null;
+        if (empty($_POST)) {
+            $this->authController->redirectUser();
+            return;
+        }
+
+        $userData = [
+            'name'     => $_POST['userName'] ?? '',
+            'email'    => $_POST['userEmail'] ?? '',
+            'password' => $_POST['userPassword'] ?? '',
+            'photo'    => $_FILES['photoUser'] ?? null
+        ];
+
+        $result = $this->handleUserRegistration($userData);
+
+        if ($result) {
+            $this->view->showSuccess();
+        } else {
+            ErrorView::showError();
+        }
+    }
+
+    public function insertUser(): void
+    {
+        $userData = [
+            'name'     => $_POST['name'] ?? null,
+            'email'    => $_POST['email'] ?? null,
+            'password' => $_POST['password'] ?? null,
+            'photo'    => $_FILES['profile_photo'] ?? null
+        ];
+
+        if (!$userData['name'] || !$userData['email'] || !$userData['password']) {
+            $this->authController->redirectUser();
+            return;
+        }
+
+        $result = $this->handleUserRegistration($userData);
+
+        if ($result) {
+            $user = (object)[
+                'id_user'       => '-',
+                'name'          => $userData['name'],
+                'email'         => $userData['email'],
+                'profile_photo' => $result
+            ];
+            $this->view->insertSuccess([$user]);
+        } else {
+            ErrorView::showError();
+        }
+    }
+
+    private function handleUserRegistration(array $data)
+    {
+        $name     = trim($data['name']);
+        $email    = trim($data['email']);
+        $password = trim($data['password']);
+        $photo    = $data['photo'];
+
+        if (empty($name) || empty($email) || empty($password)) {
+            return false;
+        }
 
         if ($this->userModel->userNameExists($name)) {
             ErrorView::userAlreadyExists();
-            return;
+            return false;
         }
 
         if ($this->userModel->emailExists($email)) {
             ErrorView::emailAlreadyExists();
-            return;
+            return false;
         }
 
-        $uploadDir   = "assets/img/covers/users/";
-        $defaultPhoto = "/soundSnack/assets/img/covers/users/defaultUser.jpg";
-        $photoPath    = $defaultPhoto;
+        $uploadDir     = "assets/img/covers/users/";
+        $defaultPhoto  = "/soundSnack/assets/img/covers/users/defaultUser.jpg";
+        $photoPath     = $defaultPhoto;
 
         $hasPhoto = $photo && isset($photo['name']) && $photo['error'] === UPLOAD_ERR_OK;
-
         if ($hasPhoto) {
             $uploadedPath = FileUploader::handleCoverUpload($photo, $name, $uploadDir);
             if ($uploadedPath !== null) {
                 $photoPath = $uploadedPath;
             } else {
                 ErrorView::photoUploadError();
-                return;
+                return false;
             }
         } else if ($photo && $photo['error'] !== UPLOAD_ERR_NO_FILE) {
             ErrorView::photoUploadError();
-            return;
+            return false;
         }
-
         $result = $this->userModel->registerUser($name, $email, $password, $photoPath);
-        $result ? $this->view->showSuccess() : ErrorView::showError();
+        return $result ? $photoPath : false;
     }
 
-    public function getUserProfile(): void
+    public function getUserByName(): void
     {
-        $name = $_POST['userName'] ?? '';
+        $name = $_POST['name'] ?? '';
+
+        if (empty($name)) {
+            $this->authController->redirectUser();
+            return;
+        }
 
         $user = $this->userModel->getUserByName($name);
 
         if ($user !== null) {
-            $this->view->userProfile($user);
+            $this->view->userProfile($user, 1);
         } else {
-            ErrorView::userNotFound();
+            $this->authController->redirectUser();
         }
     }
+
+    public function getUserById(): void
+    {
+        $id = $_POST['id_user'] ?? null;
+
+        if (empty($id) || !is_numeric($id) || (int)$id <= 0) {
+            $this->authController->redirectUser();
+            return;
+        }
+
+        $id = (int)$id;
+        $user = $this->userModel->getUserById($id);
+
+        if ($user !== null) {
+            $this->view->userProfile($user, 1);
+        } else {
+            $this->authController->redirectUser();
+        }
+    }
+
+    public function getUsersLimit(): void
+    {
+        $limit = $_POST['limit'] ?? null;
+
+        if (empty($limit) || !is_numeric($limit) || (int)$limit <= 0) {
+            $this->authController->redirectUser();
+            return;
+        }
+
+        $limit = (int)$limit;
+
+        $totalUsers = $this->userModel->getUsersCount();
+
+        if ($totalUsers === 0) {
+            $this->authController->redirectUser();
+            return;
+        }
+
+        if ($limit > $totalUsers) {
+            $limit = $totalUsers;
+        }
+
+        $users = $this->userModel->getUsersLimit($limit);
+
+        if (!empty($users)) {
+            $this->view->userProfile($users, count($users));
+        } else {
+            $this->authController->redirectUser();
+        }
+    }
+
+    public function deleteUser(): void
+    {
+        $id = $_POST['id_user'] ?? null;
+
+        if (empty($id) || !is_numeric($id) || (int)$id <= 0) {
+            $this->authController->redirectUser();
+            return;
+        }
+
+        $id = (int)$id;
+        $user = $this->userModel->getUserById($id);
+
+        if ($user !== null) {
+            $result = $this->userModel->deleteUserById($id);
+
+            if ($result) {
+                $this->view->showDeleteSuccess([$user]);
+            } else {
+                ErrorView::showError();
+            }
+        } else {
+            ErrorView::showUserNotFound();
+        }
+    }
+
 
     public function showHome(): void
     {

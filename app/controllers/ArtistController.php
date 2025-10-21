@@ -1,26 +1,33 @@
 <?php
 
 require_once './app/models/ArtistModel.php';
+require_once './app/models/SongModel.php';
 require_once './app/views/ArtistView.php';
+require_once './app/controllers/AuthController.php';
 
 class ArtistController
 {
+    private const DEFAULT_COVER = '/soundSnack/assets/img/covers/artists/default.jpg';
+    private const COVER_UPLOAD_DIR = "assets/img/covers/artist/";
+
     private ArtistModel $artistModel;
     private ArtistView $artistView;
-    const DEFAULT_COVER = '/soundSnack/assets/img/covers/artists/default.jpg';
-    private const COVER_UPLOAD_DIR = "assets/img/covers/artist/";
+    private SongModel $songModel;
+    private AuthController $authController;
 
     public function __construct()
     {
         $this->artistModel = new ArtistModel();
+        $this->songModel = new SongModel();
         $this->artistView = new ArtistView();
+        $this->authController = new AuthController();
     }
 
     public function getArtistById()
     {
         $id = $_POST['id_artist'] ?? null;
         if (empty($id) || !is_numeric($id) || (int)$id <= 0) {
-            ErrorView::showError();
+            $this->authController->redirectUser();
             return;
         }
 
@@ -28,23 +35,18 @@ class ArtistController
         $artist = $this->artistModel->getArtistById($id);
 
         if ($artist !== null) {
-            $this->artistView->showArtists($artist);
+            $this->artistView->showArtists($artist, 1);
         } else {
             $this->artistView->showArtistNotFound($id);
         }
     }
 
-    public function getArtistsCount()
-    {
-        $result = $this->artistModel->getArtistsCount();
-        $result !== 0 ? $this->artistView->showArtistCount($result) : ErrorView::showError();
-    }
-
-    public function getArtistsLimit()
+    public function getArtistsLimit(): void
     {
         $limit = $_POST['limit'] ?? null;
+
         if (empty($limit) || !is_numeric($limit) || (int)$limit <= 0) {
-            ErrorView::showError();
+            $this->authController->redirectUser();
             return;
         }
 
@@ -62,7 +64,12 @@ class ArtistController
         }
 
         $artists = $this->artistModel->getArtistsLimit($limit);
-        !empty($artists) ? $this->artistView->showArtists($artists) : ErrorView::showError();
+
+        if (!empty($artists)) {
+            $this->artistView->showArtists($artists, count($artists));
+        } else {
+            ErrorView::showError();
+        }
     }
 
     public function getArtistByName()
@@ -70,19 +77,19 @@ class ArtistController
         $name = $_POST['name'] ?? null;
 
         if (empty($name)) {
-            ErrorView::showError();
+            $this->authController->redirectUser();
             return;
         }
 
         if ($this->artistModel->artistExists($name)) {
             $result = $this->artistModel->getArtistByName($name);
-            $result !== null ? $this->artistView->showArtists($result) : ErrorView::showError();
+            $result !== null ? $this->artistView->showArtists($result, 1) : ErrorView::showError();
         } else {
             $this->artistView->showArtistNotFound($name);
         }
     }
 
-    public function insertArtist()
+    public function insertArtist(): void
     {
         $name           = $_POST['name'] ?? null;
         $biography      = $_POST['biography'] ?? null;
@@ -92,7 +99,7 @@ class ArtistController
         $place_of_birth = $_POST['place_of_birth'] ?? null;
 
         if (!$name || !$biography || !$date_of_birth || !$place_of_birth) {
-            ErrorView::showError();
+            $this->authController->redirectUser();
             return;
         }
 
@@ -102,7 +109,6 @@ class ArtistController
         }
 
         $hasCover = $cover && isset($cover['name']) && $cover['error'] === UPLOAD_ERR_OK;
-
         if ($hasCover) {
             $uploadedPath = FileUploader::handleCoverUpload($cover, $name, self::COVER_UPLOAD_DIR);
             if ($uploadedPath === null) {
@@ -113,6 +119,7 @@ class ArtistController
             $uploadedPath = self::DEFAULT_COVER;
         }
 
+        // Inserta en la base de datos
         $result = $this->artistModel->insertArtist(
             $name,
             $biography,
@@ -123,7 +130,6 @@ class ArtistController
         );
 
         if ($result) {
-
             $artist = (object)[
                 'id_artist'      => '-',
                 'name'           => $name,
@@ -144,7 +150,7 @@ class ArtistController
         $name = $_POST['name'] ?? null;
 
         if (empty($name)) {
-            ErrorView::showError();
+            $this->authController->redirectUser();
             return;
         }
 
@@ -162,6 +168,7 @@ class ArtistController
             $this->artistView->showArtistNotFound($name);
         }
     }
+
     public function updateArtist()
     {
         $artistId        = $_POST['id_artist'] ?? null;
@@ -173,7 +180,7 @@ class ArtistController
         $newPlaceOfBirth = $_POST['place_of_birth'] ?? null;
 
         if (empty($artistId) || !is_numeric($artistId) || (int)$artistId <= 0) {
-            ErrorView::showError();
+            $this->authController->redirectUser();
             return;
         }
 
@@ -251,24 +258,21 @@ class ArtistController
         }
     }
 
-
     public function getArtistDetails($params)
     {
-        var_dump($params, "entre");
-        /*
-        if (!$id) {
-            ErrorView::showError();
+        if (empty($params[0]) || !is_numeric($params[0])) {
+            ErrorView::show404();
             return;
         }
 
-        // Obtener las canciones del artista
-        $songs = $this->artistModel->getSongsByArtistId($id);
+        $idArtist = intval($params[0]);
+        $artist = $this->artistModel->getArtistById($idArtist);
 
-        if (!empty($songs)) {
-            $this->artistView->showArtistSongs($songs);
+        if ($artist) {
+            $songs = $this->songModel->getSongsByArtist($idArtist);
+            $this->artistView->showArtistDetails([$artist], $songs);
         } else {
-            ErrorView::showError();
+            ErrorView::showMaintenance();
         }
-    }*/
     }
 }

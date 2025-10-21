@@ -66,7 +66,6 @@ class ArtistModel
         return $artistsList;
     }
 
-
     // Obtiene el artista por nombre 
     public function getArtistByName(string $name): ?object
     {

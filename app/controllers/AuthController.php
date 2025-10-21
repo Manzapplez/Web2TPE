@@ -10,39 +10,47 @@ class AuthController
         $this->userModel = new UserModel();
     }
 
-    public function logInUser()
+    public function logInUser(): void
     {
-        $userName = $_POST["userName"];
-        $userPassword = $_POST["userPassword"];
+        if (empty($_POST['userName']) || empty($_POST['userPassword'])) {
+            $this->redirectUser();
+            return;
+        }
+
+        $userName     = $_POST['userName'];
+        $userPassword = $_POST['userPassword'];
 
         if ($this->userModel->userNameExists($userName)) {
             if ($this->userModel->verifyPassword($userName, $userPassword)) {
                 $user = $this->userModel->getUserByName($userName);
 
                 $_SESSION['user'] = [
-                    'id' => $user->id_user,
-                    'name' => $user->name,
-                    'email' => $user->email,
+                    'id'           => $user->id_user,
+                    'name'         => $user->name,
+                    'email'        => $user->email,
                     'profilePhoto' => $user->profile_photo,
-                    'loggedIn' => true
+                    'loggedIn'     => true
                 ];
-                // Redirige según el tipo de usuario
+
+                // Redirige según el tipo de usuario 
                 $this->redirectUser();
-            } else {
-                ErrorView::failedLogin();
+                return;
             }
-        } else {
-            ErrorView::failedLogin();
         }
+
+        // Si falla login
+        ErrorView::failedLogin();
     }
+
 
     public function logOut(): void
     {
         $_SESSION = [];
         session_destroy();
-        header("Location: home");
+        header("Location: " . Router::getBaseUrl() . "home");
         exit;
     }
+
     // Retorna true si hay sesión activa y el usuario está logueado
     public function isSessionActive(): bool
     {
@@ -58,16 +66,18 @@ class AuthController
     // Redirige según el tipo de usuario o si no hay sesión activa
     public function redirectUser(): void
     {
+        $baseUrl = Router::getBaseUrl();
+
         if ($this->isSessionActive()) {
             if ($this->isAdmin()) {
-                header("Location: admin");
+                header("Location: " . $baseUrl . "admin");
                 exit;
             } else {
-                header("Location: home");
+                header("Location: " . $baseUrl . "home");
                 exit;
             }
         } else {
-            header("Location: home");
+            header("Location: " . $baseUrl . "home");
             exit;
         }
     }

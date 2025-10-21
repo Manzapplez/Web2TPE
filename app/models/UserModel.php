@@ -88,4 +88,73 @@ class UserModel
             return null;
         }
     }
+
+    // Elimina un usuario por ID
+    public function deleteUserById(int $id): bool
+    {
+        $sql = "DELETE FROM users WHERE id_user = ?";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$id]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error al eliminar usuario con ID '$id': " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Obtiene el usuario por ID
+    public function getUserById(int $id): ?object
+    {
+        $sql = "SELECT id_user, name, email, password, profile_photo
+            FROM users
+            WHERE id_user = ?";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$id]);
+            $row = $stmt->fetch(PDO::FETCH_OBJ);
+            return $row ?: null;
+        } catch (PDOException $e) {
+            error_log("Error al buscar usuario con ID '$id': " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // Retorna la cantidad de usuarios disponibles
+    public function getUsersCount(): int
+    {
+        $sql = "SELECT COUNT(*) AS total FROM users";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_OBJ);
+            return $row ? (int)$row->total : 0;
+        } catch (PDOException $e) {
+            error_log("Error al obtener la cantidad de usuarios: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    // Obtiene una cantidad limitada de usuarios
+    public function getUsersLimit(int $limit): array
+    {
+        $usersList = [];
+        $limit = max(1, $limit);
+
+        $sql = "SELECT id_user, name, email, profile_photo
+            FROM users
+            LIMIT $limit";
+
+        try {
+            $stmt = $this->db->query($sql);
+            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                $usersList[] = $row;
+            }
+        } catch (PDOException $e) {
+            error_log("Error al obtener los usuarios con límite: " . $e->getMessage());
+            return [];
+        }
+
+        return $usersList;
+    }
 }

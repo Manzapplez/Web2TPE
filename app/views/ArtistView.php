@@ -2,16 +2,7 @@
 
 class ArtistView
 {
-    public function showArtistCount(int $count): void
-    {
-        $user = $_SESSION['user'] ?? null;
-        require_once './app/templates/home/header.phtml';
-        require_once './app/templates/messages/artistCount.phtml';
-        require_once './app/templates/admin/sectionArtist.phtml';
-        require_once './app/templates/home/footer.phtml';
-    }
-
-    public function showArtists($artists): void
+    public function showArtists($artists, int $totalArtists)
     {
         $user = $_SESSION['user'] ?? null;
 
@@ -20,21 +11,27 @@ class ArtistView
         }
 
         require_once './app/templates/home/header.phtml';
-        require './app/templates/admin/tableArtists.phtml';
+        require_once './app/templates/admin/nav.phtml';
+        require_once './app/templates/admin/artistCount.phtml';
+        require './app/templates/home/artistDetail.phtml';
         require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showArtistNotFound(string $name): void
+    public function showArtistNotFound(string $name)
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
         require_once './app/templates/messages/artistNotFound.phtml';
         require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showSuccess($artists): void
+    public function showSuccess($artists)
     {
         $user = $_SESSION['user'] ?? null;
         if ($artists && !is_array($artists)) {
@@ -42,45 +39,44 @@ class ArtistView
         }
         require_once './app/templates/home/header.phtml';
         require_once './app/templates/messages/operationSuccessful.phtml';
-        require './app/templates/admin/tableArtists.phtml';
+        require './app/templates/home/artistDetail.phtml';
         require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showArtistAlreadyExists(): void
+    public function showArtistAlreadyExists()
     {
         $user = $_SESSION['user'] ?? null;
 
         require_once './app/templates/home/header.phtml';
-        require_once './app/templates/home/nav.phtml';
+        require_once './app/templates/admin/nav.phtml';
         require_once './app/templates/messages/artistAlreadyExists.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showArtistsList($artists, int $limit, int $totalArtists): void
+    public function showArtistsList($artists, int $limit, int $totalArtists)
     {
         $user = $_SESSION['user'] ?? null;
 
         require_once './app/templates/home/header.phtml';
         require_once './app/templates/home/nav.phtml';
-        require_once './app/templates/admin/listArtist.phtml';
+        require_once './app/templates/home/listArtist.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 
 
-    public function showArtistDetail($songs): void
+    public function showArtistDetails(array $artists, array $songs = []): void
     {
         $user = $_SESSION['user'] ?? null;
-        /*
-        if (!$artist || !is_object($artist)) {
-            ErrorView::showError();
-            return;
-        }*/
-        echo "entre";
-        /*
+
         require_once './app/templates/home/header.phtml';
         require_once './app/templates/home/nav.phtml';
-        require_once './app/templates/admin/tableArtists.phtml';
-        require_once './app/templates/home/footer.phtml';*/
+        require_once './app/templates/home/artistDetail.phtml';
+        require_once './app/templates/home/songDetail.phtml';
+        require_once './app/templates/home/footer.phtml';
     }
 }

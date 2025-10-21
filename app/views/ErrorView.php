@@ -1,7 +1,7 @@
 <?php
 class ErrorView
 {
-    public static function photoUploadError(): void
+    public static function photoUploadError()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -11,7 +11,7 @@ class ErrorView
         require_once './app/templates/home/footer.phtml';
     }
 
-    public static function coverUploadError(): void
+    public static function coverUploadError()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -21,17 +21,17 @@ class ErrorView
         require_once './app/templates/home/footer.phtml';
     }
 
-    public static function show404(): void
+    public static function show404()
     {
         require_once './app/templates/messages/show404.phtml';
     }
 
-    public static function show500(): void
+    public static function show500()
     {
         require_once './app/templates/messages/show500.phtml';
     }
 
-    public static function failedLogin(): void
+    public static function failedLogin()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -41,7 +41,7 @@ class ErrorView
         require_once './app/templates/home/footer.phtml';
     }
 
-    public static function userAlreadyExists(): void
+    public static function userAlreadyExists()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -51,7 +51,7 @@ class ErrorView
         require_once './app/templates/home/footer.phtml';
     }
 
-    public static function emailAlreadyExists(): void
+    public static function emailAlreadyExists()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -61,7 +61,7 @@ class ErrorView
         require_once './app/templates/home/footer.phtml';
     }
 
-    public static function showError(): void
+    public static function showError()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -70,11 +70,22 @@ class ErrorView
         require_once './app/templates/home/footer.phtml';
     }
 
-    public static function showMaintenance(): void
+    public static function showMaintenance()
     {
         require_once './app/templates/home/header.phtml';
         require_once './app/templates/home/nav.phtml';
         require './app/templates/messages/maintenance.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
+
+    public static function showUserNotFound(): void
+    {
+        $user = $_SESSION['user'] ?? null;
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/messages/userNotFound.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUser.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 }

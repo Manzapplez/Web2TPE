@@ -1,5 +1,5 @@
 <section class="admin-section">
-    <h2 class="admin-header">Administración de bases de datos</h2>
+    <h2 id="adminArtists" class="admin-header">Administración de artistas</h2>
 
     <!-- Agregar Artista -->
     <div class="admin-form-block">
@@ -7,7 +7,7 @@
             <h3>Agregar Artista</h3>
         </div>
         <p>Complete los campos para registrar un nuevo artista en la base de datos.</p>
-        <form action="addArtist" method="POST" enctype="multipart/form-data" class="login-form">
+        <form action="<?= Router::getBaseUrl(); ?>admin/addArtist" method="POST" enctype="multipart/form-data" class="login-form">
             <div class="form-group">
                 <label for="add_name">Nombre</label>
                 <input type="text" id="add_name" name="name" placeholder="Ingrese el nombre del artista" required>
@@ -22,8 +22,7 @@
             </div>
             <div class="form-group">
                 <label for="add_date_of_birth">Fecha de nacimiento</label>
-                <input type="date" id="add_date_of_birth" name="date_of_birth"
-                    max="<?= date('Y-m-d') ?>" required>
+                <input type="date" id="add_date_of_birth" name="date_of_birth" max="<?= date('Y-m-d') ?>" required>
             </div>
             <div class="form-group">
                 <label for="add_date_of_death">Fecha de fallecimiento</label>
@@ -55,7 +54,7 @@
         </div>
         <p>Puede buscar artistas por ID, nombre o mostrar una lista limitada de artistas.</p>
 
-        <form action="viewArtistById" method="POST" class="login-form">
+        <form action="<?= Router::getBaseUrl(); ?>admin/viewArtistById" method="POST" class="login-form">
             <div class="form-group">
                 <label for="search_id">ID del artista</label>
                 <input type="number" id="search_id" name="id_artist" placeholder="Ingrese el ID del artista">
@@ -65,7 +64,7 @@
             </div>
         </form>
 
-        <form action="viewArtistByName" method="POST" class="login-form">
+        <form action="<?= Router::getBaseUrl(); ?>admin/viewArtistByName" method="POST" class="login-form">
             <div class="form-group">
                 <label for="search_name">Nombre del artista</label>
                 <input type="text" id="search_name" name="name" placeholder="Ingrese el nombre del artista">
@@ -75,7 +74,7 @@
             </div>
         </form>
 
-        <form action="viewArtists" method="POST" class="login-form">
+        <form action="<?= Router::getBaseUrl(); ?>admin/viewArtists" method="POST" class="login-form">
             <div class="form-group">
                 <label for="search_limit">Número de artistas a mostrar</label>
                 <select id="search_limit" name="limit" required>
@@ -96,7 +95,7 @@
             <h3>Actualizar Artista</h3>
         </div>
         <p>Ingrese el ID del artista y complete los campos que desea modificar.</p>
-        <form action="updateArtist" method="POST" enctype="multipart/form-data" class="login-form">
+        <form action="<?= Router::getBaseUrl(); ?>admin/updateArtist" method="POST" enctype="multipart/form-data" class="login-form">
             <div class="form-group">
                 <label for="update_id">ID del Artista</label>
                 <input type="number" id="update_id" name="id_artist" placeholder="Ingrese el ID del artista" required>
@@ -115,8 +114,7 @@
             </div>
             <div class="form-group">
                 <label for="update_date_of_birth">Nueva fecha de nacimiento</label>
-                <input type="date" id="update_date_of_birth" name="date_of_birth"
-                    max="<?= date('Y-m-d') ?>">
+                <input type="date" id="update_date_of_birth" name="date_of_birth" max="<?= date('Y-m-d') ?>">
             </div>
             <div class="form-group">
                 <label for="update_date_of_death">Nueva fecha de fallecimiento</label>
@@ -147,7 +145,7 @@
             <h3>Borrar Artista</h3>
         </div>
         <p>Ingrese el nombre del artista que desea eliminar de la base de datos.</p>
-        <form action="deleteArtist" method="POST" class="login-form">
+        <form action="<?= Router::getBaseUrl(); ?>admin/deleteArtist" method="POST" class="login-form">
             <div class="form-group">
                 <label for="delete_name">Nombre del artista a borrar:</label>
                 <input type="text" id="delete_name" name="name" required>

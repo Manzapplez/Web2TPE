@@ -19,19 +19,74 @@ class SongController
         $this->songView = new SongView();
     }
 
-    // utilizamos showSongs tanto para el listado como para el detalle, depende de si viene con params
-    public function showSongs($id = null)
+    public function getListSongs($params)
     {
-        if ($id) {
-            $song = $this->songModel->getSongs($id);
+        $limit = isset($params[0]) && is_numeric($params[0]) ? intval($params[0]) : 5;
+
+        if ($limit < 1) {
+            ErrorView::show404();
+            return;
+        }
+
+        $totalSongs = $this->songModel->getSongsCount();
+
+        if ($limit > $totalSongs) {
+            $limit = $totalSongs;
+        }
+
+        $songs = $this->songModel->getSongsLimit($limit);
+
+        if (!empty($songs)) {
+            $this->songView->showSongsList($songs, $limit, $totalSongs);
+        } else {
+            ErrorView::showMaintenance();
+        }
+    }
+
+    public function getSongDetails($params)
+    {
+        if (empty($params[0]) || !is_numeric($params[0])) {
+            ErrorView::show404();
+            return;
+        }
+
+        $idSong = intval($params[0]);
+        $song = $this->songModel->getSongById($idSong);
+
+        if ($song) {
+            $this->songView->showSongDetails([$song]);
+        } else {
+            ErrorView::showMaintenance();
+        }
+    }
+
+
+
+
+
+    public function showSongs()
+    {
+        $songs = $this->songModel->getSongs();
+        $this->songView->showSongs($songs);
+    }
+
+    public function showSongById()
+    {
+
+        $id_song = $_POST['id_song'] ?? null;
+
+        if (empty($id_song)) {
+            ErrorView::showError();
+            return;
+        }
+
+        if ($id_song) {
+            $song = $this->songModel->getSongs($id_song);
             if (!$song) {
                 echo "La canción no existe.";
                 return;
             }
             $this->songView->showSong($song);
-        } else {
-            $songs = $this->songModel->getSongs();
-            $this->songView->showSongs($songs);
         }
     }
 
@@ -43,10 +98,6 @@ class SongController
      *         -> DESPUÉS DE EJECUTAR LA ACCIÓN, REDIRIGIMOS AL LISTADO (/songs)
      */
 
-
-
-    /* Si no agregamos el formulario de addSong en el phtml de songList entonces habría que agregar otro método que llame a eso,
-    corroborar con Martín como le parece mejor que se vea la aplicación */
     public function addSong()
     {
         // AuthHelper::verify();
@@ -66,28 +117,55 @@ class SongController
 
 
     // CARGA EL FORMULARIO
-    public function showFormEditSong($id)
-    {
-        $song = $this->songModel->getSongs($id);
-        $artists = $this->artistModel->getArtists();
-        $this->songView->showFormEditSong($song, $artists);
-    }
+    // public function showFormEditSong($id)
+    // {
+    //     $song = $this->songModel->getSongs($id);
+    //     $artists = $this->artistModel->getArtists();
+    //     $this->songView->showFormEditSong($song, $artists);
+    // }
 
     public function editSong($id)
     {
-        // AuthHelper::verify();
-        $id_artist = $_POST['id_artist'];
-        $title = $_POST['title'];
-        $album = $_POST['album'];
-        $duration = $_POST['duration'];
-        $genre = $_POST['genre'];
-        $video = $_POST['video'];
+        $id_artist = $_POST['id_artist'] ?? null;
+        $title = $_POST['title'] ?? null;
+        $album = $_POST['album'] ?? null;
+        $duration = $_POST['duration'] ?? null;
+        $genre = $_POST['genre'] ?? null;
+        $video = $_POST['video'] ?? null;
 
-        $this->songModel->editSong($id, $id_artist, $title, $album, $duration, $genre, $video);
+        if (!$title || !$album || !$duration || !$genre || !$video) {
+            ErrorView::showError();
+            return;
+        }
 
-        //  header('Location: ' . BASE_URL . 'songs');
-        exit;
+        $result = $this->songModel->addSong(
+            $id,
+            $id_artist,
+            $title,
+            $album,
+            $duration,
+            $genre,
+            $video
+        );
+
+        if ($result) {
+
+            $song = (object)[
+                'id_song'      => '-',
+                'id_artist' => $id_artist,
+                'title'           => $title,
+                'album'      => $album,
+                'duration'          => $duration,
+                'genre'  => $genre,
+                'video'  => $video
+            ];
+
+            $this->songView->showSuccess($song);
+        } else {
+            ErrorView::showError();
+        }
     }
+
 
     public function removeSong($id)
     {

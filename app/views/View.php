@@ -2,7 +2,7 @@
 
 class View
 {
-    public function showHome(): void
+    public function showHome()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -11,16 +11,18 @@ class View
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showAdmin(): void
+    public function showAdmin()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
-        //podria haber un nav entre abm de artistas, canciones, usuarios
+        require_once './app/templates/admin/nav.phtml';
         require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showLogin(): void
+    public function showLogin()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -30,7 +32,7 @@ class View
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showRegister(): void
+    public function showRegister()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -39,7 +41,7 @@ class View
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showSuccess(): void
+    public function showSuccess()
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
@@ -48,5 +50,62 @@ class View
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function userProfile($user) {}
+    public function insertSuccess($user)
+    {
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/admin/nav.phtml';
+        require_once './app/templates/messages/insertSuccess.phtml';
+        require_once './app/templates/home/userDetail.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
+
+    public function showDeleteSuccess($user)
+    {
+        $sessionUser = $_SESSION['user'] ?? null;
+
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/admin/nav.phtml';
+        require_once './app/templates/messages/deleteSuccess.phtml';
+        require_once './app/templates/home/userDetail.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
+
+
+    public function userProfile($user, int $totalUsers)
+    {
+        $sessionUser = $_SESSION['user'] ?? null;
+
+        if ($user && !is_array($user)) {
+            $user = [$user];
+        }
+
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/admin/nav.phtml';
+        require_once './app/templates/admin/userCount.phtml';
+        require_once './app/templates/home/userDetail.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
+
+    public function showDeleteSucces($user)
+    {
+        $sessionUser = $_SESSION['user'] ?? null;
+
+        require_once './app/templates/home/header.phtml';
+        require_once './app/templates/admin/nav.phtml';
+        require_once './app/templates/messages/deleteSuccess.phtml';
+        require_once './app/templates/home/userDetail.phtml';
+        require_once './app/templates/admin/sectionArtist.phtml';
+        require_once './app/templates/admin/sectionSong.phtml';
+        require_once './app/templates/admin/sectionUsers.phtml';
+        require_once './app/templates/home/footer.phtml';
+    }
 }

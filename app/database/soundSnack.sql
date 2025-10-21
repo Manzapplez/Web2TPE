@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-10-2025 a las 01:22:02
+-- Tiempo de generación: 21-10-2025 a las 08:54:51
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -72,33 +72,24 @@ CREATE TABLE `songs` (
 --
 
 INSERT INTO `songs` (`id_song`, `id_artist`, `title`, `album`, `duration`, `genre`, `video`) VALUES
-(1, 1, 'La Clave Para Conquistarte', 'La Clave Para Conquistarte', 4.16, 'Pop/Balada', 'https://youtu.be/XqCoOoYCwKA?si=ouDSSKD38sm5Gm6D'),
+(1, 1, 'La Clave Para Conquistarte', 'La Clave Para Conquistarte', 4.16, 'Pop/Balada', 'https://youtu.be/XqCoOoYCwKA?si=oe9OYtxO3Mpld3-N'),
 (2, 1, 'Hoy Es Hoy', 'Hoy', 3.50, 'Pop', 'https://youtu.be/i4YX0vrDqgc?si=LeVPPueNzVs4Tnti'),
 (3, 1, 'Dulce Amargo', 'Amo', 4.12, 'Pop/Rock', 'https://youtu.be/RTdh9QD6338?si=bafnB8nkYRErXwYt'),
-(4, 2, 'Víctimas', 'Hola Mundo', 3.55, 'Pop/Rock', 'https://youtu.be/oVQbqVL3Ifs?si=bjb-vOKfFjJPDNPN'),
-(5, 2, 'Tus Horas Mágicas', 'Hola Mundo', 4.02, 'Pop', 'https://youtu.be/trvkG1hHzPo?si=FE_1-kMKfXevFp6s'),
-(6, 2, 'Arruinarse', 'Canciones del Huracán', 3.48, 'Pop/Rock', 'https://youtu.be/tkcLP9risaA?si=KYh4wwy9HV1wL9Y2'),
-(7, 3, 'Algo Personal', 'Libertad', 3.45, 'Rock', 'https://youtu.be/xl9TOQgw8pE?si=JYe_TIrgHTIYj4K6'),
-(8, 3, 'La Moda del Montón', 'Libertar', 4.01, 'Rock', 'https://youtu.be/V-Q8McPur38?si=4YNu9YkGyAsUz4eo'),
-(9, 3, 'Mi Sensación', 'Una Hora a Tokyo', 3.57, 'Rock', 'https://youtu.be/35JNhNQEjt8?si=cBH_tNHFSh_KFSUz'),
-(10, 4, 'Don', 'El Disco de tu Corazón', 3.50, 'Pop', 'https://youtu.be/8-E2ufHz7Bs'),
-(11, 4, 'Perfecta', 'El Disco de tu Corazón', 3.40, 'Pop', 'https://youtu.be/7ShXEEn3AlE'),
-(12, 4, 'Yo te diré', 'Sin Restricciones', 3.30, 'Pop', 'https://youtu.be/n-dWF20u2RU'),
+(4, 3, 'Víctimas', 'Hola Mundo', 3.55, 'Pop/Rock', 'https://youtu.be/oVQbqVL3Ifs?si=bjb-vOKfFjJPDNPN'),
+(5, 3, 'Tus Horas Mágicas', 'Hola Mundo', 4.02, 'Pop', 'https://youtu.be/trvkG1hHzPo?si=FE_1-kMKfXevFp6s'),
+(6, 3, 'Arruinarse', 'Canciones del Huracán', 3.48, 'Pop/Rock', 'https://youtu.be/tkcLP9risaA?si=KYh4wwy9HV1wL9Y2'),
+(7, 2, 'Algo Personal', 'Libertad', 3.45, 'Rock', 'https://youtu.be/xl9TOQgw8pE?si=JYe_TIrgHTIYj4K6'),
+(8, 2, 'La Moda del Montón', 'Libertad', 4.01, 'Rock', 'https://youtu.be/V-Q8McPur38?si=4YNu9YkGyAsUz4eo'),
+(9, 2, 'Mi Sensación', 'Una Hora a Tokyo', 3.57, 'Rock', 'https://youtu.be/35JNhNQEjt8?si=cBH_tNHFSh_KFSUz'),
+(10, 4, 'Don', 'El Disco de tu Corazón', 3.50, 'Pop', 'https://youtu.be/eap0G9ldKc0?si=J9yg7-MplwPrQH3H'),
+(11, 4, 'Perfecta', 'El Disco de tu Corazón', 3.40, 'Pop', 'https://youtu.be/a3hOeU7w59o?si=QdBfy1Ny5KKnYhkQ'),
+(12, 4, 'Yo te diré', 'Sin Restricciones', 3.30, 'Pop', 'https://youtu.be/y6-H9HMb9qM?si=8Ji_yi1T-aTZZhXl'),
 (13, 5, 'Dakiti', 'El Último Tour del Mundo', 3.25, 'Reggaetón', 'https://youtu.be/TmKh7lAwnBI'),
-(14, 5, 'Tití Me Preguntó', 'Un Verano Sin Ti', 4.00, 'Reggaetón', 'https://youtu.be/hs6alRuYcBo'),
-(15, 5, 'La Canción Ficticia', 'Un Verano Sin Ti', 3.45, 'Reggaetón', 'https://youtu.be/example'),
+(14, 5, 'Tití Me Preguntó', 'Un Verano Sin Ti', 4.00, 'Reggaetón', 'https://youtu.be/Cr8K88UcO0s?si=3oBrHaRo62aPtF3Q'),
+(15, 5, 'Amorfoda', 'Grandes Éxitos', 3.45, 'Reggaetón', 'https://youtu.be/kLpH1nSLJSs?si=vzG54BkEJfCVF5uc'),
 (16, 6, 'Poker Face', 'The Fame', 3.58, 'Pop', 'https://youtu.be/bESGLojNYSo'),
 (17, 6, 'Bad Romance', 'The Fame Monster', 4.54, 'Pop', 'https://youtu.be/qrO4YZeyl0I'),
-(18, 6, 'Abracadabra', 'Mayhem', 3.43, 'Electropop', 'https://www.youtube.com/watch?v=vBynw9Isr28'),
-(19, 4, 'Don', 'El Disco de tu Corazón', 3.50, 'Pop', 'https://youtu.be/8-E2ufHz7Bs'),
-(20, 4, 'Perfecta', 'El Disco de tu Corazón', 3.40, 'Pop', 'https://youtu.be/7ShXEEn3AlE'),
-(21, 4, 'Yo te diré', 'Sin Restricciones', 3.30, 'Pop', 'https://youtu.be/n-dWF20u2RU'),
-(22, 5, 'Dakiti', 'El Último Tour del Mundo', 3.25, 'Reggaetón', 'https://youtu.be/TmKh7lAwnBI'),
-(23, 5, 'Tití Me Preguntó', 'Un Verano Sin Ti', 4.00, 'Reggaetón', 'https://youtu.be/hs6alRuYcBo'),
-(24, 5, 'Callaíta', 'YHLQMDLG', 4.10, 'Reggaetón', 'https://youtu.be/ZrJ8jHcvBrY'),
-(25, 6, 'Poker Face', 'The Fame', 3.58, 'Pop', 'https://youtu.be/bESGLojNYSo'),
-(26, 6, 'Bad Romance', 'The Fame Monster', 4.54, 'Pop', 'https://youtu.be/qrO4YZeyl0I'),
-(27, 6, 'Abracadabra', 'Mayhem', 3.43, 'Electropop', 'https://www.youtube.com/watch?v=vBynw9Isr28');
+(18, 6, 'Abracadabra', 'Mayhem', 3.43, 'Electropop', 'https://www.youtube.com/watch?v=vBynw9Isr28');
 
 -- --------------------------------------------------------
 
@@ -119,9 +110,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `profile_photo`) VALUES
-(8, 'webadmin', 'webadmin@gmail.com', '$2y$10$3NbNAqg6Sd.oXEHcTv8cB..Czx2YC2GNQ0429UYK9VmW4SmLxXNQm', '/soundSnack/assets/img/covers/users/webadmin.png'),
-(9, 'Malena', 'malenaManzzalini@gmail.com', '$2y$10$rBFJYuyEee1THNxgH/uTfeXngmXQbty7o9rLzTV9stlcvxQDhlDnS', '/soundSnack/assets/img/covers/users/defaultUser.jpg'),
-(11, 'Martin', 'Martin@gmail.com', '$2y$10$grah4RlK1n4WeqrwfF8IBednjA9exDUmHxjem6mZd5y5RlXjnXYsm', '/soundSnack/assets/img/covers/users/defaultUser.jpg');
+(1, 'webadmin', 'webadmin@gmail.com', '$2y$10$3NbNAqg6Sd.oXEHcTv8cB..Czx2YC2GNQ0429UYK9VmW4SmLxXNQm', '/soundSnack/assets/img/covers/users/webadmin.png'),
+(2, 'Malena', 'malenaManzzalini@gmail.com', '$2y$10$rBFJYuyEee1THNxgH/uTfeXngmXQbty7o9rLzTV9stlcvxQDhlDnS', '/soundSnack/assets/img/covers/users/defaultUser.jpg'),
+(3, 'Martin', 'Martin@gmail.com', '$2y$10$grah4RlK1n4WeqrwfF8IBednjA9exDUmHxjem6mZd5y5RlXjnXYsm', '/soundSnack/assets/img/covers/users/defaultUser.jpg');
 
 --
 -- Índices para tablas volcadas

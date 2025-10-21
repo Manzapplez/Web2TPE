@@ -14,37 +14,48 @@ class Router
     private string $action;
     private static string $baseUrl;
 
-    //Array asociativo multidimensional para almacenar todas las actions disponibles para el usuario
+    // Array asociativo multidimensional para almacenar todas las actions disponibles para el usuario
     private const ACTIONS = [
-        'home'          => ['controller' => 'userController',   'method' => 'showHome'],
-        'login'         => ['controller' => 'userController',   'method' => 'showLogin'],
-        'register'      => ['controller' => 'userController',   'method' => 'showRegister'],
-        'registerUser'  => ['controller' => 'userController',   'method' => 'registerUser'],
-        'admin'         => ['controller' => 'userController', 'method' => 'showAdmin'],
+        // Home
+        'home'               => ['controller' => 'userController',   'method' => 'showHome'],
+        'home/login'         => ['controller' => 'userController',   'method' => 'showLogin'],
+        'home/register'      => ['controller' => 'userController',   'method' => 'showRegister'],
+        'home/registerUser'  => ['controller' => 'userController',   'method' => 'registerUser'],
+        'home/logIn'         => ['controller' => 'authController',   'method' => 'logInUser'],
+        'home/logOut'        => ['controller' => 'authController',   'method' => 'logOut'],
+        'home/listArtists'   => ['controller' => 'artistController', 'method' => 'getListArtists'],
+        'home/artistDetail'  => ['controller' => 'artistController', 'method' => 'getArtistDetails'],
+        'home/listSongs'     => ['controller' => 'songController',   'method' => 'getListSongs'],
+        'home/songDetail'    => ['controller' => 'songController',   'method' => 'getSongDetails'],
 
-        'logIn'         => ['controller' => 'authController',   'method' => 'logInUser'],
-        'logOut'        => ['controller' => 'authController',   'method' => 'logOut'],
+        // Admin Users
+        'admin'                 => ['controller' => 'userController',   'method' => 'showAdmin'],
+        'admin/viewUserById'    => ['controller' => 'userController',   'method' => 'getUserById'],
+        'admin/viewUserByName'  => ['controller' => 'userController',   'method' => 'getUserByName'],
+        'admin/viewUsers'       => ['controller' => 'userController',   'method' => 'getUsersLimit'],
+        'admin/addUser'   => ['controller' => 'userController', 'method' => 'insertUser'],
+        'admin/removeUser' => ['controller' => 'userController', 'method' => 'deleteUser'],
 
-        'addArtist'         => ['controller' => 'artistController', 'method' => 'insertArtist'],
-        'updateArtist'      => ['controller' => 'artistController', 'method' => 'updateArtist'],
-        'deleteArtist'      => ['controller' => 'artistController', 'method' => 'deleteArtistByName'],
-        'viewArtistById'    => ['controller' => 'artistController', 'method' => 'getArtistById'],
-        'viewArtistByName'  => ['controller' => 'artistController', 'method' => 'getArtistByName'],
-        'viewArtists'       => ['controller' => 'artistController', 'method' => 'getArtistsLimit'],
-        'listArtists'       => ['controller' => 'artistController', 'method' => 'getListArtists'],
-        'artistDetail'       => ['controller' => 'artistController', 'method' => 'getArtistDetails'],
+        // Admin Artists
+        'admin/addArtist'       => ['controller' => 'artistController', 'method' => 'insertArtist'],
+        'admin/updateArtist'    => ['controller' => 'artistController', 'method' => 'updateArtist'],
+        'admin/deleteArtist'    => ['controller' => 'artistController', 'method' => 'deleteArtistByName'],
+        'admin/viewArtistById'  => ['controller' => 'artistController', 'method' => 'getArtistById'],
+        'admin/viewArtistByName' => ['controller' => 'artistController', 'method' => 'getArtistByName'],
+        'admin/viewArtists'     => ['controller' => 'artistController', 'method' => 'getArtistsLimit'],
 
-        'songs'         => ['controller' => 'songController',   'method' => 'showSongs'],
-        'song'          => ['controller' => 'songController',   'method' => 'showSongById'],
-        'addSong'       => ['controller' => 'songController',   'method' => 'addSong'],
-        'editSong'      => ['controller' => 'songController',   'method' => 'editSong'],
-        'removeSong'    => ['controller' => 'songController',   'method' => 'removeSong']
+        // Admin Songs
+        'admin/song'            => ['controller' => 'songController',   'method' => 'showSongById'],
+        'admin/addSong'         => ['controller' => 'songController',   'method' => 'addSong'],
+        'admin/editSong'        => ['controller' => 'songController',   'method' => 'editSong'],
+        'admin/removeSong'      => ['controller' => 'songController',   'method' => 'removeSong']
     ];
 
+    // Constructor: inicializa los controladores y define la URL base y la acción
     public function __construct()
     {
         $this->userController   = new UserController();
-        $this->authController = new AuthController();
+        $this->authController   = new AuthController();
         $this->artistController = new ArtistController();
         $this->songController   = new SongController();
 
@@ -59,26 +70,41 @@ class Router
             . dirname($_SERVER['PHP_SELF']) . '/';
     }
 
+    // Retorna la URL base de la aplicación
     public static function getBaseUrl(): string
     {
         return self::$baseUrl;
     }
 
-    // Determina la acción solicitada por el usuario
+    // Determina la acción solicitada por la URL
     private function defineAction(): void
     {
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri  = $_SERVER['REQUEST_URI'];
         $base = dirname($_SERVER['PHP_SELF']);
         $path = trim(substr($uri, strlen($base)), '/');
+
+        // Si no hay path, se asume 'home'
         $this->action = $path ?: 'home';
     }
 
-    // Evalúa la acción solcitada y llama al método correspondiente de forma dinamica
+    // Evalúa la acción solicitada y llama al método correspondiente de forma dinámica
     public function evaluateAction(): void
     {
-        $segments = explode("/", $this->action);
-        $route = $segments[0];
-        $params = array_slice($segments, 1);
+        // Obtiene la URL completa
+        $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $base = rtrim(dirname($_SERVER['PHP_SELF']), '/');
+        $path = trim(str_replace($base, '', $uri), '/');
+
+        // Divide la URL en partes separadas por "/"
+        $parts = explode('/', $path);
+
+        // Determina la ruta principal 
+        $route = $parts[0] . (isset($parts[1]) ? '/' . $parts[1] : '');
+
+        // Captura los parámetros restantes para pasarlos al método
+        $params = array_slice($parts, 2);
+
+        // Si la acción no existe, mostrar error 404
         if (!isset(self::ACTIONS[$route])) {
             ErrorView::show404();
             return;
@@ -89,6 +115,7 @@ class Router
 
         $controller = $this->$controllerName;
 
+        // Ejecuta el método si existe, pasando los parámetros
         if (method_exists($controller, $method)) {
             $controller->$method($params);
         } else {
