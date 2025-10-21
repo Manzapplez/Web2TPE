@@ -157,4 +157,25 @@ class UserModel
 
         return $usersList;
     }
+
+    // Obtiene todos los usuarios disponibles.
+    public function getAllUsers(): array
+    {
+        $usersList = [];
+
+        $sql = "SELECT id_user, name, email, password, profile_photo
+            FROM users";
+
+        try {
+            $stmt = $this->db->query($sql);
+            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                $usersList[] = $row;
+            }
+        } catch (PDOException $e) {
+            error_log("Error al obtener todos los usuarios: " . $e->getMessage());
+            return [];
+        }
+
+        return $usersList;
+    }
 }

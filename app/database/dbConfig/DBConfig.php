@@ -10,7 +10,6 @@ final class DBConfig
     private const USER = "root";
     private const PASSWORD = "";
 
-    
     private function __construct() {}
 
     public static function getDSN(): string

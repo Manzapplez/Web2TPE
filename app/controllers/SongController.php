@@ -60,10 +60,6 @@ class SongController
         }
     }
 
-
-
-
-
     public function showSongs()
     {
         $songs = $this->songModel->getSongs();

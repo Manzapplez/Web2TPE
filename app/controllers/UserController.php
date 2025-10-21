@@ -205,29 +205,4 @@ class UserController
             ErrorView::showUserNotFound();
         }
     }
-
-
-    public function showHome(): void
-    {
-        $this->view->showHome();
-    }
-
-    public function showAdmin(): void
-    {
-        if ($this->authController->isAdmin()) {
-            $this->view->showAdmin();
-        } else {
-            $this->view->showHome();
-        }
-    }
-
-    public function showLogin(): void
-    {
-        $this->view->showLogin();
-    }
-
-    public function showRegister(): void
-    {
-        $this->view->showRegister();
-    }
 }

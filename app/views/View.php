@@ -11,14 +11,14 @@ class View
         require_once './app/templates/home/footer.phtml';
     }
 
-    public function showAdmin()
+    public function showAdmin($artists, $users)
     {
         $user = $_SESSION['user'] ?? null;
         require_once './app/templates/home/header.phtml';
         require_once './app/templates/admin/nav.phtml';
-        require_once './app/templates/admin/sectionArtist.phtml';
-        require_once './app/templates/admin/sectionSong.phtml';
-        require_once './app/templates/admin/sectionUsers.phtml';
+        require './app/templates/admin/sectionArtist.phtml';
+        require './app/templates/admin/sectionSong.phtml';
+        require './app/templates/admin/sectionUsers.phtml';
         require_once './app/templates/home/footer.phtml';
     }
 
@@ -77,7 +77,7 @@ class View
     }
 
 
-    public function userProfile($user, int $totalUsers)
+    public function userProfile($user, $totalUsers)
     {
         $sessionUser = $_SESSION['user'] ?? null;
 

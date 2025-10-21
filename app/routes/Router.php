@@ -1,11 +1,14 @@
 <?php
+require_once './app/controllers/BaseController.php';
 require_once './app/controllers/UserController.php';
+require_once './app/controllers/AuthController.php';
 require_once './app/controllers/ArtistController.php';
 require_once './app/controllers/SongController.php';
 require_once './app/views/ErrorView.php';
 
 class Router
 {
+    private BaseController $baseController;
     private UserController $userController;
     private AuthController $authController;
     private ArtistController $artistController;
@@ -17,9 +20,9 @@ class Router
     // Array asociativo multidimensional para almacenar todas las actions disponibles para el usuario
     private const ACTIONS = [
         // Home
-        'home'               => ['controller' => 'userController',   'method' => 'showHome'],
-        'home/login'         => ['controller' => 'userController',   'method' => 'showLogin'],
-        'home/register'      => ['controller' => 'userController',   'method' => 'showRegister'],
+        'home'               => ['controller' => 'baseController',   'method' => 'showHome'],
+        'home/login'         => ['controller' => 'baseController',   'method' => 'showLogin'],
+        'home/register'      => ['controller' => 'baseController',   'method' => 'showRegister'],
         'home/registerUser'  => ['controller' => 'userController',   'method' => 'registerUser'],
         'home/logIn'         => ['controller' => 'authController',   'method' => 'logInUser'],
         'home/logOut'        => ['controller' => 'authController',   'method' => 'logOut'],
@@ -29,7 +32,7 @@ class Router
         'home/songDetail'    => ['controller' => 'songController',   'method' => 'getSongDetails'],
 
         // Admin Users
-        'admin'                 => ['controller' => 'userController',   'method' => 'showAdmin'],
+        'admin'                 => ['controller' => 'baseController',   'method' => 'showAdmin'],
         'admin/viewUserById'    => ['controller' => 'userController',   'method' => 'getUserById'],
         'admin/viewUserByName'  => ['controller' => 'userController',   'method' => 'getUserByName'],
         'admin/viewUsers'       => ['controller' => 'userController',   'method' => 'getUsersLimit'],
@@ -54,6 +57,7 @@ class Router
     // Constructor: inicializa los controladores y define la URL base y la acción
     public function __construct()
     {
+        $this->baseController   = new BaseController();
         $this->userController   = new UserController();
         $this->authController   = new AuthController();
         $this->artistController = new ArtistController();
@@ -94,6 +98,11 @@ class Router
         $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $base = rtrim(dirname($_SERVER['PHP_SELF']), '/');
         $path = trim(str_replace($base, '', $uri), '/');
+
+        // 'home' por defecto si no hay ruta
+        if ($path === '') {
+            $path = 'home';
+        }
 
         // Divide la URL en partes separadas por "/"
         $parts = explode('/', $path);

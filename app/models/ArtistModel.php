@@ -66,6 +66,27 @@ class ArtistModel
         return $artistsList;
     }
 
+    // Obtiene todos los artistas disponibles. 
+    public function getAllArtists(): array
+    {
+        $artistsList = [];
+
+        $sql = "SELECT id_artist, name, biography, cover, date_of_birth, date_of_death, place_of_birth
+            FROM artists";
+
+        try {
+            $stmt = $this->db->query($sql);
+            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                $artistsList[] = $row;
+            }
+        } catch (PDOException $e) {
+            error_log("Error al obtener todos los artistas: " . $e->getMessage());
+            return [];
+        }
+
+        return $artistsList;
+    }
+
     // Obtiene el artista por nombre 
     public function getArtistByName(string $name): ?object
     {
